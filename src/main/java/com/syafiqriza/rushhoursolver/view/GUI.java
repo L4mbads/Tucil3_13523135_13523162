@@ -1,14 +1,18 @@
 package com.syafiqriza.rushhoursolver.view;
 
 import com.syafiqriza.rushhoursolver.model.Board;
-import com.syafiqriza.rushhoursolver.model.State;
 import com.syafiqriza.rushhoursolver.model.Utils;
 import com.syafiqriza.rushhoursolver.model.algorithm.Algorithm;
+import com.syafiqriza.rushhoursolver.model.algorithm.GreedyBestFirstSearch;
+import com.syafiqriza.rushhoursolver.model.algorithm.InformedSearch;
 import com.syafiqriza.rushhoursolver.model.algorithm.UniformCostSearch;
 import com.syafiqriza.rushhoursolver.model.heuristic.BlockingHeuristic;
+import com.syafiqriza.rushhoursolver.model.heuristic.DistanceHeuristic;
 import com.syafiqriza.rushhoursolver.model.heuristic.Heuristic;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -33,8 +37,10 @@ import java.io.IOException;
 public class GUI extends Application {
     private Board board;
     private Algorithm algorithm;
-    private Heuristic heuristic = new BlockingHeuristic();
     private Font customFont;
+    private Text resultText;
+    private Text errorMessageText;
+    private VBox boardViewContainer;
 
     @Override
     public void start(Stage stage) {
@@ -46,7 +52,19 @@ public class GUI extends Application {
                         new Stop(0, Color.web("#0f0f0f")), new Stop(1, Color.web("#1c1c1c"))
                 ), CornerRadii.EMPTY, Insets.EMPTY)));
 
-        // === Title Box with Checkered Borders ===
+        VBox titleBox = createTitleBox();
+        root.setTop(titleBox);
+
+        VBox menuBox = createMenuBox(stage);
+        root.setCenter(menuBox);
+
+        Scene scene = new Scene(root, 800, 600);
+        stage.setTitle("Rush Hour Solver - Menu Utama");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    private VBox createTitleBox() {
         VBox titleBox = new VBox();
         titleBox.setAlignment(Pos.CENTER);
         titleBox.setBackground(new Background(new BackgroundFill(
@@ -83,9 +101,10 @@ public class GUI extends Application {
         titleTextBox.setPadding(new Insets(10));
 
         titleBox.getChildren().addAll(topBar, titleTextBox, bottomBar);
-        root.setTop(titleBox);
+        return titleBox;
+    }
 
-        // === Menu Box ===
+    private VBox createMenuBox(Stage stage) {
         VBox menuBox = new VBox(20);
         menuBox.setAlignment(Pos.CENTER);
         menuBox.setPadding(new Insets(40));
@@ -95,12 +114,32 @@ public class GUI extends Application {
         Text subtitle = styledLabel("Pilih algoritma dan puzzle:");
         subtitle.setFill(Color.LIGHTYELLOW);
 
+        errorMessageText = styledLabel("");
+        errorMessageText.setFill(Color.ORANGERED);
+
         ComboBox<String> algoSelector = new ComboBox<>();
         algoSelector.getItems().addAll("Uniform Cost Search", "Greedy Best First Search", "A*");
         algoSelector.getSelectionModel().selectFirst();
         algoSelector.setPrefWidth(250);
-        algoSelector.setStyle("-fx-font-size: 14px; -fx-background-color: #2c2c2c; -fx-text-fill: white;" +
-                " -fx-border-color: yellow; -fx-border-radius: 5; -fx-background-radius: 5;");
+        algoSelector.setStyle(
+                "-fx-font-size: 14px;" +
+                        "-fx-background-color: #2c2c2c;" +
+                        "-fx-text-fill: #ffff00;" +
+                        "-fx-prompt-text-fill: #ffff00;" +
+                        "-fx-mark-color: yellow;" +
+                        "-fx-border-color: yellow;" +
+                        "-fx-border-radius: 5;" +
+                        "-fx-background-radius: 5;"
+        );
+        algoSelector.setButtonCell(new javafx.scene.control.ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(item);
+                setTextFill(Color.web("#ffff00"));
+                setFont(customFont);
+            }
+        });
 
         Button loadButton = createStyledButton("\uD83D\uDCC2 Load Puzzle");
         Button solveButton = createStyledButton("\uD83D\uDE80 Cari Solusi");
@@ -112,36 +151,118 @@ public class GUI extends Application {
             if (file != null) {
                 try {
                     board = Utils.readRushHourPuzzleFromFile(file.getAbsolutePath());
-                    showAlert("Sukses", "Puzzle berhasil dimuat!");
+                    errorMessageText.setFill(Color.LIMEGREEN);
+                    errorMessageText.setText("Puzzle berhasil dimuat");
                 } catch (IOException | IllegalArgumentException ex) {
-                    showAlert("Gagal", "Error membaca puzzle: " + ex.getMessage());
+                    errorMessageText.setFill(Color.ORANGERED);
+                    errorMessageText.setText("Error membaca puzzle");
                 }
             }
         });
 
         solveButton.setOnAction(e -> {
+            errorMessageText.setFill(Color.ORANGERED);
             if (board == null) {
-                showAlert("Error", "Silakan load puzzle terlebih dahulu.");
+                errorMessageText.setText("Silakan load puzzle terlebih dahulu");
                 return;
             }
             int choice = algoSelector.getSelectionModel().getSelectedIndex();
             switch (choice) {
                 case 0 -> algorithm = new UniformCostSearch();
-                case 1 -> algorithm = new UniformCostSearch();
-                case 2 -> algorithm = new UniformCostSearch();
-                default -> showAlert("Error", "Algoritma tidak dikenali.");
+                case 1 -> {
+                    algorithm = new GreedyBestFirstSearch();
+                    if (algorithm instanceof InformedSearch alg) {
+                        alg.setHeuristicModel(new BlockingHeuristic());
+                    }
+                }
+                case 2 -> {
+                    algorithm = new GreedyBestFirstSearch();
+                    if (algorithm instanceof InformedSearch alg) {
+                        alg.setHeuristicModel(new DistanceHeuristic());
+                    }
+                }
+                default -> algorithm = null;
             }
-            algorithm.solve(new State(board, 0, 0));
-            showAlert("Selesai", "Solusi ditemukan! (visualisasi menyusul)");
+
+            if (algorithm == null) {
+                errorMessageText.setText("Algoritma tidak dikenali");
+                return;
+            }
+
+            showProcessWindow(stage);
+
+            Task<Void> solveTask = new Task<>() {
+                private long duration;
+                private boolean found;
+
+                @Override
+                protected Void call() {
+                    long start = System.nanoTime();
+                    com.syafiqriza.rushhoursolver.model.State initial = new com.syafiqriza.rushhoursolver.model.State(board, 0, 0);
+                    algorithm.solve(initial);
+                    found = algorithm.getSolution() != null && algorithm.getSolution().length != 0;
+                    duration = (System.nanoTime() - start) / 1_000_000;
+                    return null;
+                }
+
+                @Override
+                protected void succeeded() {
+                    String message = found ?
+                            "Solusi ditemukan\nWaktu pencarian: " + duration + " ms" :
+                            "Solusi tidak ditemukan.\nWaktu pencarian: " + duration + " ms";
+                    showSolutionWindow(stage, message, found);
+                }
+            };
+            new Thread(solveTask).start();
         });
 
-        menuBox.getChildren().addAll(subtitle, algoSelector, loadButton, solveButton);
-        root.setCenter(menuBox);
+        menuBox.getChildren().addAll(subtitle, errorMessageText, algoSelector, loadButton, solveButton);
+        return menuBox;
+    }
 
-        Scene scene = new Scene(root, 800, 600);
-        stage.setTitle("Rush Hour Solver - Menu Utama");
-        stage.setScene(scene);
-        stage.show();
+    private void showProcessWindow(Stage stage) {
+        BorderPane processLayout = new BorderPane();
+        processLayout.setBackground(new Background(new BackgroundFill(Color.web("#1c1c1c"), CornerRadii.EMPTY, Insets.EMPTY)));
+
+        resultText = styledLabel("Mencari solusi...");
+        boardViewContainer = new VBox();
+        boardViewContainer.setAlignment(Pos.CENTER);
+
+        VBox centerBox = new VBox(20, resultText, boardViewContainer);
+        centerBox.setAlignment(Pos.CENTER);
+
+        processLayout.setCenter(centerBox);
+        Scene processScene = new Scene(processLayout, 800, 600);
+        stage.setScene(processScene);
+    }
+
+    private void showSolutionWindow(Stage stage, String resultMessage, boolean found) {
+        BorderPane layout = new BorderPane();
+        layout.setBackground(new Background(new BackgroundFill(Color.web("#0f0f0f"), CornerRadii.EMPTY, Insets.EMPTY)));
+
+        Text messageText = styledLabel(resultMessage);
+        Button backButton = createStyledButton("⬅ Kembali");
+        backButton.setOnAction(e -> start(stage));
+
+        VBox solutionStepsBox = new VBox(10);
+        solutionStepsBox.setAlignment(Pos.CENTER);
+
+        if (found && algorithm.getSolution().length != 0) {
+            for (var state : algorithm.getSolution()) {
+                Text step = new Text(state.getBoard().getDetail());
+                step.setFont(customFont);
+                step.setFill(Color.LIGHTGRAY);
+                solutionStepsBox.getChildren().add(step);
+            }
+        }
+
+        VBox centerBox = new VBox(20, messageText, solutionStepsBox, backButton);
+        centerBox.setAlignment(Pos.CENTER);
+        centerBox.setPadding(new Insets(20));
+
+        layout.setCenter(centerBox);
+        Scene solutionScene = new Scene(layout, 800, 600);
+        stage.setScene(solutionScene);
     }
 
     private void showAlert(String title, String message) {
@@ -166,7 +287,6 @@ public class GUI extends Application {
                 "-fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8px 16px;"));
         return button;
     }
-
 
     private Text styledLabel(String content) {
         Text label = new Text(content);
