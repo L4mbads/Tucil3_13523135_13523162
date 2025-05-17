@@ -3,9 +3,10 @@ package com.syafiqriza.rushhoursolver.model.heuristic;
 import com.syafiqriza.rushhoursolver.model.Board;
 import com.syafiqriza.rushhoursolver.model.Car;
 
-public class BlockingHeuristic extends Heuristic{
 
-    public BlockingHeuristic() {}
+public class DistanceHeuristic extends Heuristic{
+
+    public DistanceHeuristic() {}
 
     @Override
     public int getValue(Board board) {
@@ -32,26 +33,27 @@ public class BlockingHeuristic extends Heuristic{
 
         char[][] grid = board.getGrid();
 
-        int blockingCarCounter = 0;
+        int distance = 0;
         if(goalCar.isHorizontal()) {
             int carRow = goalCar.getRow();
             for(int j = goalCar.getCol() + dirToFinish; j != board.getGoalCol(); j += dirToFinish) {
                 char carId = grid[carRow][j];
-                if(carId != 'P' && carId != '.') {
-                    blockingCarCounter++;
+                if(carId != 'P') {
+                    distance++;
                 }
             }
         } else {
             int carCol = goalCar.getCol();
             for(int i = goalCar.getRow() + dirToFinish; i != board.getGoalRow(); i += dirToFinish) {
                 char carId = grid[i][carCol];
-                if(carId != 'P' && carId != '.') {
-                    blockingCarCounter++;
+                if(carId != 'P') {
+                    distance++;
                 }
             }
         }
 
         // System.out.println("BLOCKING: " + blockingCarCounter);
-        return blockingCarCounter;
+        return distance;
     }
 }
+

@@ -7,8 +7,11 @@ import com.syafiqriza.rushhoursolver.model.Board;
 import com.syafiqriza.rushhoursolver.model.State;
 import com.syafiqriza.rushhoursolver.model.Utils;
 import com.syafiqriza.rushhoursolver.model.algorithm.Algorithm;
+import com.syafiqriza.rushhoursolver.model.algorithm.GreedyBestFirstSearch;
+import com.syafiqriza.rushhoursolver.model.algorithm.InformedSearch;
 import com.syafiqriza.rushhoursolver.model.algorithm.UniformCostSearch;
 import com.syafiqriza.rushhoursolver.model.heuristic.BlockingHeuristic;
+import com.syafiqriza.rushhoursolver.model.heuristic.DistanceHeuristic;
 import com.syafiqriza.rushhoursolver.model.heuristic.Heuristic;
 
 public class CLI {
@@ -28,6 +31,7 @@ public class CLI {
                 board = Utils.readRushHourPuzzleFromFile(filePath);
                 board.printBoard();
                 System.out.println("- Tujuan: (" + board.getGoalRow() + ", " + board.getGoalCol() + ")");
+                System.out.println("padahal board " + board.getCols() +", " + board.getRows());
             } catch (IOException e) {
                 System.err.println("File tidak ditemukan: " + e.getMessage());
                 return;
@@ -39,34 +43,6 @@ public class CLI {
                 return;
             }
 
-            int chosenHeuristic = 0;
-            System.out.println("""
-                Pilih heuristik:
-                1. Blocking Cars
-                    """);
-
-            while(true) {
-                while(!sc.hasNextInt()) {
-                    sc.nextLine();
-                    System.out.println("Masukkan pilihan angka yang valid");
-                    continue;
-                }
-                chosenHeuristic = sc.nextInt();
-                if(chosenHeuristic > 0 && chosenHeuristic < 2) {
-                    break;
-                }
-                System.out.println("Masukkan pilihan angka yang valid");
-            }
-
-            Heuristic heuristic;
-            switch (chosenHeuristic) {
-                case 1:
-                    heuristic = new BlockingHeuristic();
-                    break;
-
-                default:
-                    assert false;
-            }
 
             int chosenAlgorithm = 0;
             System.out.println("""
@@ -87,21 +63,60 @@ public class CLI {
             Algorithm algorithm = null;
             switch (chosenAlgorithm) {
                 case 1:
-                case 2:
-                case 3:
                     algorithm = new UniformCostSearch();
                     break;
+                case 2:
+                    algorithm = new GreedyBestFirstSearch();
+                    break;
+                case 3:
 
                 default:
                     assert false;
             }
 
 
+            if(algorithm instanceof InformedSearch alg) {
+                int chosenHeuristic = 0;
+                System.out.println("""
+                    Pilih heuristik:
+                    1. Blocking Cars
+                    2. Distance to Goal
+                        """);
+
+                while(true) {
+                    while(!sc.hasNextInt()) {
+                        sc.nextLine();
+                        System.out.println("Masukkan pilihan angka yang valid");
+                        continue;
+                    }
+                    chosenHeuristic = sc.nextInt();
+                    if(chosenHeuristic > 0 && chosenHeuristic < 3) {
+                        break;
+                    }
+                    System.out.println("Masukkan pilihan angka yang valid");
+                }
+
+                Heuristic heuristic = null;
+                switch (chosenHeuristic) {
+                    case 1:
+                        heuristic = new BlockingHeuristic();
+                        break;
+                    case 2:
+                        heuristic = new DistanceHeuristic();
+                        break;
+
+                    default:
+                        assert false;
+                }
+                alg.setHeuristicModel(heuristic);
+            }
+
             algorithm.solve(new State(board, 0, 0));
 
             for(State state : algorithm.getSolution()) {
                 System.out.println(state.getBoard().getDetail());
-                state.getBoard().printBoard();;
+                state.getBoard().printBoard();
+                System.out.println();
             }
 
         }
