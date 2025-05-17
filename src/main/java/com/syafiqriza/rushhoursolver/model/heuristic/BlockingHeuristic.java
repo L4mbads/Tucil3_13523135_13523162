@@ -1,6 +1,6 @@
-package main.java.com.syafiqriza.rushhoursolver.model.heuristic;
+package com.syafiqriza.rushhoursolver.model.heuristic;
 
-import main.java.com.syafiqriza.rushhoursolver.model.State;
+import com.syafiqriza.rushhoursolver.model.State;
 
 public class BlockingHeuristic extends Heuristic{
 

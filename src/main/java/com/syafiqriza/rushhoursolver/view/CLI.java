@@ -1,4 +1,4 @@
-package main.java.com.syafiqriza.rushhoursolver.view;
+package com.syafiqriza.rushhoursolver.view;
 
 import java.io.IOException;
 import java.util.Scanner;

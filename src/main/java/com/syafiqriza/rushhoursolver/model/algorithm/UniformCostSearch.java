@@ -1,7 +1,7 @@
-package main.java.com.syafiqriza.rushhoursolver.model.algorithm;
+package com.syafiqriza.rushhoursolver.model.algorithm;
 
-import main.java.com.syafiqriza.rushhoursolver.model.State;
-import main.java.com.syafiqriza.rushhoursolver.model.Board;
+import com.syafiqriza.rushhoursolver.model.State;
+import com.syafiqriza.rushhoursolver.model.Board;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class UniformCostSearch extends Algorithm {
 
-    private Map<State, Integer> costSoFar = new HashMap<>();
+    private final Map<State, Integer> costSoFar = new HashMap<>();
     Set<State> visited = new HashSet<>();
 
     public UniformCostSearch() {}

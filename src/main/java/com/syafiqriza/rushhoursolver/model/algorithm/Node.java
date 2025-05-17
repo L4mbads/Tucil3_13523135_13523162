@@ -1,12 +1,12 @@
-package main.java.com.syafiqriza.rushhoursolver.model.algorithm;
+package com.syafiqriza.rushhoursolver.model.algorithm;
 
-import main.java.com.syafiqriza.rushhoursolver.model.*;
+import com.syafiqriza.rushhoursolver.model.*;
 
 public class Node {
 
-	private State state;
-	private int depth;
-	private Node parent;
+	private final State state;
+	private final int depth;
+	private final Node parent;
 
 	public Node(State state, int depth, Node parent) {
 		this.state = state;

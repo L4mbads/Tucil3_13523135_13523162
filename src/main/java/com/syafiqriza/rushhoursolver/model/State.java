@@ -1,4 +1,4 @@
-package main.java.com.syafiqriza.rushhoursolver.model;
+package com.syafiqriza.rushhoursolver.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,8 +53,7 @@ public class State {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof State)) return false;
-        State other = (State) obj;
+        if (!(obj instanceof State other)) return false;
         return carStates.equals(other.carStates);
     }
 

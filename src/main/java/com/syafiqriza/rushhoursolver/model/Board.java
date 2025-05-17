@@ -1,4 +1,4 @@
-package main.java.com.syafiqriza.rushhoursolver.model;
+package com.syafiqriza.rushhoursolver.model;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -18,7 +18,7 @@ public class Board {
     private final int goalRow;      // Baris tujuan yang harus dicapai mobil utama
     private final int goalCol;      // Kolom tujuan yang harus dicapai mobil utama
 
-    private Map<Character, Car> cars;  // Map dari ID mobil ke objek Car
+    private final Map<Character, Car> cars;  // Map dari ID mobil ke objek Car
     private char[][] grid;             // Representasi visual grid papan saat ini
 
     /**

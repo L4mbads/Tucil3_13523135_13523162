@@ -1,4 +1,4 @@
-package main.java.com.syafiqriza.rushhoursolver.model;
+package com.syafiqriza.rushhoursolver.model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
