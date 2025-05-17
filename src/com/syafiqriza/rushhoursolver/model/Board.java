@@ -31,7 +31,7 @@ public class Board {
             Arrays.fill(grid[i], '.'); // '.' artinya sel kosong
         }
         for (Car car : cars.values()) {
-            char idChar = car.getId().charAt(0); // asumsi ID satu huruf
+            char idChar = car.getId(); // asumsi ID satu huruf
             for (int[] cell : car.getOccupiedCells()) {
                 grid[cell[0]][cell[1]] = idChar;
             }

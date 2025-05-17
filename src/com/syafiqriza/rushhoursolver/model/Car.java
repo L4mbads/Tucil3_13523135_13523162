@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Car {
-    private final String id;
+    private final char id;
     private final int length;
     private final boolean isHorizontal;
     private int row, col;
 
-    public Car(String id, int length, boolean isHorizontal, int row, int col) {
+    public Car(char id, int length, boolean isHorizontal, int row, int col) {
         this.id = id;
         this.length = length;
         this.isHorizontal = isHorizontal;
@@ -17,7 +17,7 @@ public class Car {
         this.col = col;
     }
 
-    public String getId() { return id; }
+    public char getId() { return id; }
     public int getLength() { return length; }
     public boolean isHorizontal() { return isHorizontal; }
     public int getRow() { return row; }

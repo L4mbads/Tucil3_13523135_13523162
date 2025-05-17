@@ -116,7 +116,7 @@ public class Utils {
             if (!isHorizontal && head[1] != second[1])
                 throw new IllegalArgumentException("Format file tidak valid! Mobil '" + id + "' tidak lurus horizontal atau vertikal.");
 
-            cars.put(String.valueOf(id), new Car(String.valueOf(id), posList.size(), isHorizontal, head[0], head[1]));
+            cars.put(String.valueOf(id), new Car(id, posList.size(), isHorizontal, head[0], head[1]));
         }
 
         if (!cars.containsKey(goalCarId))
