@@ -4,16 +4,30 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Arrays;
 
+/**
+ * Merepresentasikan papan permainan Rush Hour.
+ * Papan terdiri dari grid ukuran rows x cols, sejumlah mobil (termasuk mobil utama),
+ * dan posisi tujuan (goal) yang harus dicapai oleh mobil utama.
+ */
 public class Board {
-    private final int rows;
-    private final int cols;
-    private final String goalCarId;
-    private final int goalRow;
-    private final int goalCol;
+    private final int rows;         // Jumlah baris pada papan
+    private final int cols;         // Jumlah kolom pada papan
+    private final String goalCarId; // ID mobil utama (biasanya "P")
+    private final int goalRow;      // Baris tujuan yang harus dicapai mobil utama
+    private final int goalCol;      // Kolom tujuan yang harus dicapai mobil utama
 
-    private Map<String, Car> cars;
-    private char[][] grid;
+    private Map<String, Car> cars;  // Map dari ID mobil ke objek Car
+    private char[][] grid;          // Representasi visual grid papan saat ini
 
+    /**
+     * Konstruktor papan.
+     * @param rows jumlah baris papan
+     * @param cols jumlah kolom papan
+     * @param cars map ID mobil ke objek Car
+     * @param goalCarId ID dari mobil utama (yang harus mencapai goal)
+     * @param goalRow baris tujuan
+     * @param goalCol kolom tujuan
+     */
     public Board(int rows, int cols, Map<String, Car> cars,
                  String goalCarId, int goalRow, int goalCol) {
         this.rows = rows;
@@ -25,19 +39,28 @@ public class Board {
         buildGrid();
     }
 
+    /**
+     * Membangun ulang grid dari posisi mobil yang ada.
+     */
     private void buildGrid() {
         grid = new char[rows][cols];
         for (int i = 0; i < rows; i++) {
-            Arrays.fill(grid[i], '.'); // '.' artinya sel kosong
+            Arrays.fill(grid[i], '.'); // '.' berarti sel kosong
         }
         for (Car car : cars.values()) {
-            char idChar = car.getId().charAt(0); // asumsi ID satu huruf
+            char idChar = car.getId().charAt(0); // Asumsi ID adalah satu huruf
             for (int[] cell : car.getOccupiedCells()) {
                 grid[cell[0]][cell[1]] = idChar;
             }
         }
     }
 
+    /**
+     * Mengecek apakah mobil dengan ID tertentu bisa bergerak sebanyak offset.
+     * @param id ID mobil yang ingin digerakkan
+     * @param offset jarak perpindahan
+     * @return true jika gerakan valid, false jika tidak
+     */
     public boolean canMove(String id, int offset) {
         Car car = cars.get(id);
         Car temp = car.copy();
@@ -53,16 +76,30 @@ public class Board {
         return true;
     }
 
+    /**
+     * Menerapkan gerakan mobil ke grid.
+     * @param id ID mobil
+     * @param offset langkah gerakan
+     */
     public void applyMove(String id, int offset) {
         cars.get(id).move(offset);
         buildGrid();
     }
 
+    /**
+     * Membatalkan gerakan mobil.
+     * @param id ID mobil
+     * @param offset offset yang ingin dibatalkan
+     */
     public void undoMove(String id, int offset) {
         cars.get(id).undoMove(offset);
         buildGrid();
     }
 
+    /**
+     * Mengecek apakah mobil utama telah mencapai posisi goal.
+     * @return true jika posisi tujuan tercapai
+     */
     public boolean isSolved() {
         Car car = cars.get(goalCarId);
         for (int[] cell : car.getOccupiedCells()) {
@@ -73,6 +110,10 @@ public class Board {
         return false;
     }
 
+    /**
+     * Mengembalikan salinan dari semua mobil pada papan.
+     * @return map ID ke salinan Car
+     */
     public Map<String, Car> getCarsCopy() {
         Map<String, Car> copy = new HashMap<>();
         for (Map.Entry<String, Car> entry : cars.entrySet()) {
@@ -81,6 +122,9 @@ public class Board {
         return copy;
     }
 
+    /**
+     * Menampilkan papan ke console.
+     */
     public void printBoard() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -90,32 +134,11 @@ public class Board {
         }
     }
 
-    // Getters
-    public int getRows() {
-        return rows;
-    }
-
-    public int getCols() {
-        return cols;
-    }
-
-    public Map<String, Car> getCars() {
-        return cars;
-    }
-
-    public char[][] getGrid() {
-        return grid;
-    }
-
-    public String getGoalCarId() {
-        return goalCarId;
-    }
-
-    public int getGoalRow() {
-        return goalRow;
-    }
-
-    public int getGoalCol() {
-        return goalCol;
-    }
+    public int getRows() { return rows; }
+    public int getCols() { return cols; }
+    public Map<String, Car> getCars() { return cars; }
+    public char[][] getGrid() { return grid; }
+    public String getGoalCarId() { return goalCarId; }
+    public int getGoalRow() { return goalRow; }
+    public int getGoalCol() { return goalCol; }
 }
