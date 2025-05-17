@@ -3,11 +3,18 @@ package com.syafiqriza.rushhoursolver.model.algorithm;
 import com.syafiqriza.rushhoursolver.model.State;
 
 public abstract class Algorithm {
-    protected State[] solution;
+
+    public class SolutionData {
+        public int nodeCount;
+        public State[] states;
+        public double timeElapsedMs;
+    }
+
+    SolutionData solutionData = new SolutionData();
 
     public abstract void solve(State initialState);
 
-    public State[] getSolution() {
-        return this.solution;
+    public SolutionData getSolution() {
+        return this.solutionData;
     }
 }

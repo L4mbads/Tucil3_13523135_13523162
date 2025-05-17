@@ -6,10 +6,12 @@ import java.util.Scanner;
 import com.syafiqriza.rushhoursolver.model.Board;
 import com.syafiqriza.rushhoursolver.model.State;
 import com.syafiqriza.rushhoursolver.model.Utils;
+import com.syafiqriza.rushhoursolver.model.algorithm.AStar;
 import com.syafiqriza.rushhoursolver.model.algorithm.Algorithm;
 import com.syafiqriza.rushhoursolver.model.algorithm.GreedyBestFirstSearch;
 import com.syafiqriza.rushhoursolver.model.algorithm.InformedSearch;
 import com.syafiqriza.rushhoursolver.model.algorithm.UniformCostSearch;
+import com.syafiqriza.rushhoursolver.model.algorithm.Algorithm.SolutionData;
 import com.syafiqriza.rushhoursolver.model.heuristic.BlockingHeuristic;
 import com.syafiqriza.rushhoursolver.model.heuristic.DistanceHeuristic;
 import com.syafiqriza.rushhoursolver.model.heuristic.Heuristic;
@@ -69,6 +71,8 @@ public class CLI {
                     algorithm = new GreedyBestFirstSearch();
                     break;
                 case 3:
+                    algorithm = new AStar();
+                    break;
 
                 default:
                     assert false;
@@ -113,11 +117,28 @@ public class CLI {
 
             algorithm.solve(new State(board, 0, 0));
 
-            for(State state : algorithm.getSolution()) {
+            SolutionData solutionData = algorithm.getSolution();
+
+            System.out.println();
+
+            if(solutionData.states != null) System.out.println("Solusi: ");
+            for(State state : solutionData.states) {
                 System.out.println(state.getBoard().getDetail());
                 state.getBoard().printBoard();
                 System.out.println();
             }
+
+            if(solutionData.states == null) {
+                System.out.println("Solusi tidak ditemukan");
+            } else {
+                System.out.println("Solusi ditemukan");
+            }
+            System.out.println();
+
+            System.out.println("Waktu (ms)      : " + solutionData.timeElapsedMs);
+            System.out.println("Node dikunjungi : " + solutionData.nodeCount);
+
+            System.out.println();
 
         }
     }
