@@ -206,10 +206,7 @@ public class GUI extends Application {
 
                 @Override
                 protected void succeeded() {
-                    String message = found ?
-                            "Solusi ditemukan\nWaktu pencarian: " + duration + " ms" :
-                            "Solusi tidak ditemukan.\nWaktu pencarian: " + duration + " ms";
-                    showSolutionWindow(stage, message, found);
+                    showSolutionWindow(stage, found);
                 }
             };
             new Thread(solveTask).start();
@@ -221,54 +218,96 @@ public class GUI extends Application {
 
     private void showProcessWindow(Stage stage) {
         BorderPane processLayout = new BorderPane();
-        processLayout.setBackground(new Background(new BackgroundFill(Color.web("#1c1c1c"), CornerRadii.EMPTY, Insets.EMPTY)));
+        processLayout.setBackground(new Background(new BackgroundFill(
+                new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE,
+                        new Stop(0, Color.web("#0f0f0f")), new Stop(1, Color.web("#1c1c1c"))
+                ), CornerRadii.EMPTY, Insets.EMPTY)));
 
         resultText = styledLabel("Mencari solusi...");
+        resultText.setStyle("-fx-font-size: 22px; -fx-font-weight: bold;");
+        resultText.setFill(Color.YELLOW);
+
         boardViewContainer = new VBox();
         boardViewContainer.setAlignment(Pos.CENTER);
 
-        VBox centerBox = new VBox(20, resultText, boardViewContainer);
-        centerBox.setAlignment(Pos.CENTER);
+        VBox card = new VBox(20, resultText, boardViewContainer);
+        card.setAlignment(Pos.CENTER);
+        card.setPadding(new Insets(30));
+        card.setMaxWidth(400);
+        card.setStyle("-fx-background-color: rgba(255, 255, 255, 0.05); -fx-background-radius: 15;");
 
-        processLayout.setCenter(centerBox);
+        BorderPane.setAlignment(card, Pos.CENTER);
+        processLayout.setCenter(card);
+
         Scene processScene = new Scene(processLayout, 800, 600);
         stage.setScene(processScene);
     }
 
-    private void showSolutionWindow(Stage stage, String resultMessage, boolean found) {
-        BorderPane layout = new BorderPane();
-        layout.setBackground(new Background(new BackgroundFill(Color.web("#0f0f0f"), CornerRadii.EMPTY, Insets.EMPTY)));
 
-        Text messageText = styledLabel(resultMessage);
+    private void showSolutionWindow(Stage stage, boolean found) {
+        BorderPane layout = new BorderPane();
+        layout.setBackground(new Background(new BackgroundFill(
+                new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE,
+                        new Stop(0, Color.web("#0f0f0f")), new Stop(1, Color.web("#1c1c1c"))
+                ), CornerRadii.EMPTY, Insets.EMPTY)));
+
+        Algorithm.SolutionData solutionData = algorithm.getSolution();
+
+        Text titleText = styledLabel(found ? "Solusi ditemukan" : "Solusi tidak ditemukan");
+        titleText.setFill(Color.WHITE);
+        titleText.setStyle("-fx-font-size: 22px; -fx-font-weight: bold;");
+
+        Text infoText = styledLabel2(
+                "Waktu Pencarian: " + solutionData.timeElapsedMs + " ms\n" +
+                        "Jumlah Simpul: " + solutionData.nodeCount + "\n" +
+                        "Jumlah Langkah: " + solutionData.states.length);
+        infoText.setStyle("-fx-font-size: 14px;");
+        infoText.setFill(Color.LIGHTGRAY);
+
+        BoardView boardView = new BoardView();
+        double scale = Math.min(1.0, 600.0 / (board.getCols() * 60));
+        boardView.setScaleX(scale);
+        boardView.setScaleY(scale);
+
+        HBox contentBox = new HBox(40, boardView, infoText);
+        contentBox.setAlignment(Pos.CENTER);
+
+        Button replayButton = createStyledButton("🔁 Replay Solusi");
+        replayButton.setDisable(!found || solutionData.states == null || solutionData.states.length == 0);
+
         Button backButton = createStyledButton("⬅ Kembali");
         backButton.setOnAction(e -> start(stage));
 
-        VBox centerBox = new VBox(20);
-        centerBox.setAlignment(Pos.CENTER);
-        centerBox.setPadding(new Insets(20));
+        VBox card = new VBox(20, titleText, contentBox, replayButton, backButton);
+        card.setAlignment(Pos.CENTER);
+        card.setPadding(new Insets(30));
+        card.setMaxWidth(600);
+        card.setStyle("-fx-background-color: rgba(255, 255, 255, 0.05); -fx-background-radius: 15;");
 
-        BoardView boardView = new BoardView();
-        centerBox.getChildren().addAll(messageText, boardView, backButton);
-
-        layout.setCenter(centerBox);
+        layout.setCenter(card);
         Scene solutionScene = new Scene(layout, 800, 600);
         stage.setScene(solutionScene);
 
-        if (found && algorithm.getSolution().states.length != 0) {
+        Runnable runReplay = () -> {
             Task<Void> animationTask = new Task<>() {
                 @Override
                 protected Void call() throws Exception {
-                    var steps = algorithm.getSolution().states;
-                    for (var state : steps) {
+                    for (var state : solutionData.states) {
                         Platform.runLater(() -> boardView.draw(state));
-                        Thread.sleep(500); // delay antar langkah
+                        Thread.sleep(500);
                     }
                     return null;
                 }
             };
             new Thread(animationTask).start();
+        };
+
+        if (found && solutionData.states != null && solutionData.states.length != 0) {
+            runReplay.run();
+            replayButton.setOnAction(e -> runReplay.run());
         }
     }
+
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -296,6 +335,14 @@ public class GUI extends Application {
     private Text styledLabel(String content) {
         Text label = new Text(content);
         label.setFont(customFont);
+        label.setFill(Color.WHITE);
+        return label;
+    }
+
+    private Text styledLabel2(String content) {
+        Font vorcasFont = Font.loadFont(getClass().getResourceAsStream("/ShockSurgent.otf"), 14);
+        Text label = new Text(content);
+        label.setFont(vorcasFont);
         label.setFill(Color.WHITE);
         return label;
     }
