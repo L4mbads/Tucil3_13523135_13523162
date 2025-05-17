@@ -1,6 +1,6 @@
-package main.java.rushhoursolver.model.algorithm;
+package main.java.com.syafiqriza.rushhoursolver.model.algorithm;
 
-import main.java.rushhoursolver.model.*;
+import main.java.com.syafiqriza.rushhoursolver.model.*;
 
 public class Node {
 

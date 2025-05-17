@@ -1,7 +1,7 @@
-package main.java.rushhoursolver.view;
+package main.java.com.syafiqriza.rushhoursolver.view;
 
-import main.java.rushhoursolver.model.Board;
-import main.java.rushhoursolver.model.State;
+import main.java.com.syafiqriza.rushhoursolver.model.Board;
+import main.java.com.syafiqriza.rushhoursolver.model.State;
 import javafx.geometry.Insets;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;

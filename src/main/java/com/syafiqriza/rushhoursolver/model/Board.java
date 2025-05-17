@@ -1,4 +1,4 @@
-package main.java.rushhoursolver.model;
+package main.java.com.syafiqriza.rushhoursolver.model;
 
 import java.util.Map;
 import java.util.HashMap;
