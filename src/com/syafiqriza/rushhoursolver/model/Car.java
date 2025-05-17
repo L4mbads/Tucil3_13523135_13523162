@@ -8,7 +8,7 @@ import java.util.List;
  * Setiap mobil memiliki ID, posisi (baris, kolom), panjang, dan orientasi (horizontal/vertikal).
  */
 public class Car {
-    private final String id; // ID unik dari mobil (contoh: "A", "B", "P")
+    private final char id; // ID unik dari mobil (contoh: "A", "B", "P")
     private final int length; // Jumlah sel yang ditempati oleh mobil
     private final boolean isHorizontal; // Orientasi mobil: true jika horizontal
     private int row, col; // Posisi kepala mobil (sel paling kiri/atas)
@@ -21,7 +21,7 @@ public class Car {
      * @param row Baris awal (kepala mobil)
      * @param col Kolom awal (kepala mobil)
      */
-    public Car(String id, int length, boolean isHorizontal, int row, int col) {
+    public Car(char id, int length, boolean isHorizontal, int row, int col) {
         this.id = id;
         this.length = length;
         this.isHorizontal = isHorizontal;
@@ -29,7 +29,7 @@ public class Car {
         this.col = col;
     }
 
-    public String getId() { return id; }
+    public char getId() { return id; }
     public int getLength() { return length; }
     public boolean isHorizontal() { return isHorizontal; }
     public int getRow() { return row; }
