@@ -1,5 +1,4 @@
 package com.syafiqriza.rushhoursolver.view;
-
 import com.syafiqriza.rushhoursolver.model.Board;
 import com.syafiqriza.rushhoursolver.model.Utils;
 import com.syafiqriza.rushhoursolver.model.algorithm.Algorithm;
@@ -200,7 +199,7 @@ public class GUI extends Application {
                     long start = System.nanoTime();
                     com.syafiqriza.rushhoursolver.model.State initial = new com.syafiqriza.rushhoursolver.model.State(board, 0, 0);
                     algorithm.solve(initial);
-                    found = algorithm.getSolution() != null && algorithm.getSolution().length != 0;
+                    found = algorithm.getSolution() != null && algorithm.getSolution().states.length != 0;
                     duration = (System.nanoTime() - start) / 1_000_000;
                     return null;
                 }
@@ -244,25 +243,31 @@ public class GUI extends Application {
         Button backButton = createStyledButton("⬅ Kembali");
         backButton.setOnAction(e -> start(stage));
 
-        VBox solutionStepsBox = new VBox(10);
-        solutionStepsBox.setAlignment(Pos.CENTER);
-
-        if (found && algorithm.getSolution().length != 0) {
-            for (var state : algorithm.getSolution()) {
-                Text step = new Text(state.getBoard().getDetail());
-                step.setFont(customFont);
-                step.setFill(Color.LIGHTGRAY);
-                solutionStepsBox.getChildren().add(step);
-            }
-        }
-
-        VBox centerBox = new VBox(20, messageText, solutionStepsBox, backButton);
+        VBox centerBox = new VBox(20);
         centerBox.setAlignment(Pos.CENTER);
         centerBox.setPadding(new Insets(20));
+
+        BoardView boardView = new BoardView();
+        centerBox.getChildren().addAll(messageText, boardView, backButton);
 
         layout.setCenter(centerBox);
         Scene solutionScene = new Scene(layout, 800, 600);
         stage.setScene(solutionScene);
+
+        if (found && algorithm.getSolution().states.length != 0) {
+            Task<Void> animationTask = new Task<>() {
+                @Override
+                protected Void call() throws Exception {
+                    var steps = algorithm.getSolution().states;
+                    for (var state : steps) {
+                        Platform.runLater(() -> boardView.draw(state));
+                        Thread.sleep(500); // delay antar langkah
+                    }
+                    return null;
+                }
+            };
+            new Thread(animationTask).start();
+        }
     }
 
     private void showAlert(String title, String message) {
@@ -298,4 +303,5 @@ public class GUI extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
 }
