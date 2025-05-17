@@ -1,5 +1,6 @@
 package com.syafiqriza.rushhoursolver.model;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class State {

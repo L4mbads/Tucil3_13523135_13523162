@@ -2,6 +2,8 @@ package com.syafiqriza.rushhoursolver.model;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Board {
@@ -15,7 +17,7 @@ public class Board {
     private char[][] grid;
 
     public Board(int rows, int cols, Map<String, Car> cars,
-                 String goalCarId, int goalRow, int goalCol) {
+            String goalCarId, int goalRow, int goalCol) {
         this.rows = rows;
         this.cols = cols;
         this.goalCarId = goalCarId;
@@ -47,8 +49,10 @@ public class Board {
 
         for (int[] cell : temp.getOccupiedCells()) {
             int r = cell[0], c = cell[1];
-            if (r < 0 || r >= rows || c < 0 || c >= cols) return false;
-            if (grid[r][c] != '.' && grid[r][c] != idChar) return false;
+            if (r < 0 || r >= rows || c < 0 || c >= cols)
+                return false;
+            if (grid[r][c] != '.' && grid[r][c] != idChar)
+                return false;
         }
         return true;
     }
@@ -88,6 +92,34 @@ public class Board {
             }
             System.out.println();
         }
+    }
+
+    public Board[] getAllPossibleMovement() {
+        List<Board> possibleBoards = new ArrayList<>();
+
+        for (String carId : cars.keySet()) {
+            Car car = cars.get(carId);
+
+            // coba gerakan ke arah negatif (mundur)
+            int offset = -1;
+            while (canMove(carId, offset)) {
+                Board newBoard = new Board(rows, cols, getCarsCopy(), goalCarId, goalRow, goalCol);
+                newBoard.applyMove(carId, offset);
+                possibleBoards.add(newBoard);
+                offset--; // Coba gerakan lebih jauh
+            }
+
+            // coba gerakan ke arah positif (maju)
+            offset = 1;
+            while (canMove(carId, offset)) {
+                Board newBoard = new Board(rows, cols, getCarsCopy(), goalCarId, goalRow, goalCol);
+                newBoard.applyMove(carId, offset);
+                possibleBoards.add(newBoard);
+                offset++; // coba gerakan lebih jauh
+            }
+        }
+
+        return possibleBoards.toArray(new Board[0]);
     }
 
     // Getters
