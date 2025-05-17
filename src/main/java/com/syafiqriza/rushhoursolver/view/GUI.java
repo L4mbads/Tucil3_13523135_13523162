@@ -37,6 +37,16 @@ public class GUI extends Application {
     private Text resultText;
     private Text errorMessageText;
     private VBox boardViewContainer;
+    private ComboBox<String> heuristicSelector;
+
+    private Heuristic getSelectedHeuristic() {
+        String selected = heuristicSelector.getSelectionModel().getSelectedItem();
+        return switch (selected) {
+            case "Distance" -> new DistanceHeuristic();
+            case "Blocking" -> new BlockingHeuristic();
+            default -> new BlockingHeuristic();
+        };
+    }
 
     @Override
     public void start(Stage stage) {
@@ -114,6 +124,31 @@ public class GUI extends Application {
         errorMessageText.setFill(Color.ORANGERED);
 
         ComboBox<String> algoSelector = new ComboBox<>();
+        heuristicSelector = new ComboBox<>();
+        heuristicSelector.getItems().addAll("Blocking", "Distance");
+        heuristicSelector.getSelectionModel().selectFirst();
+        heuristicSelector.setPrefWidth(250);
+        heuristicSelector.setStyle(
+                "-fx-font-size: 14px;" +
+                        "-fx-background-color: #2c2c2c;" +
+                        "-fx-text-fill: #ffff00;" +
+                        "-fx-prompt-text-fill: #ffff00;" +
+                        "-fx-mark-color: yellow;" +
+                        "-fx-border-color: yellow;" +
+                        "-fx-border-radius: 5;" +
+                        "-fx-background-radius: 5;"
+        );
+        heuristicSelector.setButtonCell(new javafx.scene.control.ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(item);
+                setTextFill(Color.web("#ffff00"));
+                setFont(customFont);
+            }
+        });
+        heuristicSelector.setVisible(false); // hanya terlihat jika GBFS atau A* dipilih
+
         algoSelector.getItems().addAll("Uniform Cost Search", "Greedy Best First Search", "A*");
         algoSelector.getSelectionModel().selectFirst();
         algoSelector.setPrefWidth(250);
@@ -135,6 +170,10 @@ public class GUI extends Application {
                 setTextFill(Color.web("#ffff00"));
                 setFont(customFont);
             }
+        });
+        algoSelector.setOnAction(event -> {
+            int selected = algoSelector.getSelectionModel().getSelectedIndex();
+            heuristicSelector.setVisible(selected == 1 || selected == 2);
         });
 
         Button loadButton = createStyledButton("\uD83D\uDCC2 Load Puzzle");
@@ -168,13 +207,13 @@ public class GUI extends Application {
                 case 1 -> {
                     algorithm = new GreedyBestFirstSearch();
                     if (algorithm instanceof InformedSearch alg) {
-                        alg.setHeuristicModel(new BlockingHeuristic());
+                        alg.setHeuristicModel(getSelectedHeuristic());
                     }
                 }
                 case 2 -> {
                     algorithm = new AStar();
                     if (algorithm instanceof InformedSearch alg) {
-                        alg.setHeuristicModel(new BlockingHeuristic());
+                        alg.setHeuristicModel(getSelectedHeuristic());
                     }
                 }
                 default -> algorithm = null;
@@ -209,7 +248,7 @@ public class GUI extends Application {
             new Thread(solveTask).start();
         });
 
-        menuBox.getChildren().addAll(subtitle, errorMessageText, algoSelector, loadButton, solveButton);
+        menuBox.getChildren().addAll(subtitle, errorMessageText, algoSelector, heuristicSelector, loadButton, solveButton);
         return menuBox;
     }
 
