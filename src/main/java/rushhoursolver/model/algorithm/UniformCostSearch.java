@@ -1,7 +1,7 @@
-package com.syafiqriza.rushhoursolver.model.algorithm;
+package main.java.rushhoursolver.model.algorithm;
 
-import com.syafiqriza.rushhoursolver.model.State;
-import com.syafiqriza.rushhoursolver.model.Board;
+import main.java.rushhoursolver.model.State;
+import main.java.rushhoursolver.model.Board;
 
 import java.util.HashMap;
 import java.util.Map;

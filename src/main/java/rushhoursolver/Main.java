@@ -1,6 +1,6 @@
-package com.syafiqriza.rushhoursolver;
+package main.java.rushhoursolver;
 
-import com.syafiqriza.rushhoursolver.view.CLI;
+import main.java.rushhoursolver.view.CLI;
 
 public class Main {
     public static void main(String[] args) {

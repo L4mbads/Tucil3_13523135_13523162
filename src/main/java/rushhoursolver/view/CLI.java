@@ -1,15 +1,15 @@
-package com.syafiqriza.rushhoursolver.view;
+package main.java.rushhoursolver.view;
 
 import java.io.IOException;
 import java.util.Scanner;
 
-import com.syafiqriza.rushhoursolver.model.Board;
-import com.syafiqriza.rushhoursolver.model.State;
-import com.syafiqriza.rushhoursolver.model.Utils;
-import com.syafiqriza.rushhoursolver.model.algorithm.Algorithm;
-import com.syafiqriza.rushhoursolver.model.algorithm.UniformCostSearch;
-import com.syafiqriza.rushhoursolver.model.heuristic.BlockingHeuristic;
-import com.syafiqriza.rushhoursolver.model.heuristic.Heuristic;
+import main.java.rushhoursolver.model.Board;
+import main.java.rushhoursolver.model.State;
+import main.java.rushhoursolver.model.Utils;
+import main.java.rushhoursolver.model.algorithm.Algorithm;
+import main.java.rushhoursolver.model.algorithm.UniformCostSearch;
+import main.java.rushhoursolver.model.heuristic.BlockingHeuristic;
+import main.java.rushhoursolver.model.heuristic.Heuristic;
 
 public class CLI {
     public void run() {

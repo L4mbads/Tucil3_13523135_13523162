@@ -1,4 +1,4 @@
-package com.syafiqriza.rushhoursolver.model;
+package main.java.rushhoursolver.model;
 
 import java.util.ArrayList;
 import java.util.Collections;

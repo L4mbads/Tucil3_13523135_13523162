@@ -1,6 +1,6 @@
-package com.syafiqriza.rushhoursolver.model.algorithm;
+package main.java.rushhoursolver.model.algorithm;
 
-import com.syafiqriza.rushhoursolver.model.State;
+import main.java.rushhoursolver.model.State;
 
 public abstract class Algorithm {
     private State[] solution;
