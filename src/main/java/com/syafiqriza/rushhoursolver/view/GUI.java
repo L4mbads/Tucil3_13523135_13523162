@@ -1,10 +1,7 @@
 package com.syafiqriza.rushhoursolver.view;
 import com.syafiqriza.rushhoursolver.model.Board;
 import com.syafiqriza.rushhoursolver.model.Utils;
-import com.syafiqriza.rushhoursolver.model.algorithm.Algorithm;
-import com.syafiqriza.rushhoursolver.model.algorithm.GreedyBestFirstSearch;
-import com.syafiqriza.rushhoursolver.model.algorithm.InformedSearch;
-import com.syafiqriza.rushhoursolver.model.algorithm.UniformCostSearch;
+import com.syafiqriza.rushhoursolver.model.algorithm.*;
 import com.syafiqriza.rushhoursolver.model.heuristic.BlockingHeuristic;
 import com.syafiqriza.rushhoursolver.model.heuristic.DistanceHeuristic;
 import com.syafiqriza.rushhoursolver.model.heuristic.Heuristic;
@@ -175,9 +172,9 @@ public class GUI extends Application {
                     }
                 }
                 case 2 -> {
-                    algorithm = new GreedyBestFirstSearch();
+                    algorithm = new AStar();
                     if (algorithm instanceof InformedSearch alg) {
-                        alg.setHeuristicModel(new DistanceHeuristic());
+                        alg.setHeuristicModel(new BlockingHeuristic());
                     }
                 }
                 default -> algorithm = null;
