@@ -103,6 +103,11 @@ public class Board {
     public boolean isSolved() {
         Car car = cars.get(goalCarId);
         for (int[] cell : car.getOccupiedCells()) {
+            if(car.isHorizontal()) {
+                cell[1]++;
+            } else {
+                cell[0]++;
+            }
             if (cell[0] == goalRow && cell[1] == goalCol) {
                 return true;
             }

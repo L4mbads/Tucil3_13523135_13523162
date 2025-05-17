@@ -7,12 +7,14 @@ import java.util.Objects;
 
 public class State {
     private final Board board;
-    private final int cost;
+    private final int cumCost;
+    private final int totalEstimatedCost;
     private final List<String> carStates;
 
-    public State(Board board, int cost) {
+    public State(Board board, int cumCost, int totalEstimatedCost) {
         this.board = board;
-        this.cost = cost;
+        this.cumCost = cumCost;
+        this.totalEstimatedCost = totalEstimatedCost;
 
         carStates = new ArrayList<>();
         for (char carID : board.getCars().keySet()) {
@@ -26,8 +28,12 @@ public class State {
         return board;
     }
 
-    public int getCost() {
-        return cost;
+    public int getCumulativeCost() {
+        return cumCost;
+    }
+
+    public int getTotalEstimatedCost() {
+        return totalEstimatedCost;
     }
 
     public State copy() {
@@ -40,7 +46,8 @@ public class State {
                         board.getGoalRow(),
                         board.getGoalCol()
                 ),
-                cost
+                cumCost,
+                totalEstimatedCost
         );
     }
 

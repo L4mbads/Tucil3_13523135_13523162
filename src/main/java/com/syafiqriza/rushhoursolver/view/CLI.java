@@ -97,7 +97,7 @@ public class CLI {
             }
 
 
-            algorithm.solve(new State(board, 0));
+            algorithm.solve(new State(board, 0, 0));
 
 
         }
