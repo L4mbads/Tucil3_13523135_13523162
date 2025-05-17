@@ -1,16 +1,16 @@
 package com.syafiqriza.rushhoursolver;
 
 import com.syafiqriza.rushhoursolver.view.CLI;
+import com.syafiqriza.rushhoursolver.view.GUI;
 
 public class Main {
     public static void main(String[] args) {
-        if (args.length > 0 && args[0].equalsIgnoreCase("gui")) {
-            System.out.println("GUI anjay gurinjay");
-            // GUI gui = new GUI();
-            // gui.run();
-        } else {
-            CLI cli = new CLI();
-            cli.run();
-        }
+        GUI.main(args);
+//        if (args.length > 0 && args[0].equalsIgnoreCase("gui")) {
+//            GUI.main(args);
+//        } else {
+//            CLI cli = new CLI();
+//            cli.run();
+//        }
     }
 }
