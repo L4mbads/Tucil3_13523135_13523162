@@ -64,7 +64,7 @@ public class BoardView extends GridPane {
      * @param state State yang akan digambarkan.
      */
     public void draw(State state) {
-        draw(state.getGrid());
+        draw(state.getBoard().getGrid());
     }
 
     /**
