@@ -44,56 +44,79 @@ public class Utils {
             throw new IllegalArgumentException("Format file tidak valid! Expected " + rows + " baris papan, diberikan: " + gridLines.size());
 
         boolean hasExtraKLine = gridLines.size() == rows + 1;
-        int goalRow = -1, goalCol = -1;
+        int goalRow = -2, goalCol = -2;
 
         Map<Character, List<int[]>> charToCells = new HashMap<>();
         Set<String> occupied = new HashSet<>();
 
-        for (int i = 0; i < rows; i++) {
-            String rowLine = gridLines.get(i);
+        boolean leftK = false;
+
+        for (int i = 0, finali = 0; i < rows; i++, finali++) {
+            String rowLine = gridLines.get(finali);
             if (rowLine.length() > cols + 1)
                 throw new IllegalArgumentException("Format file tidak valid! Baris ke-" + i + " terlalu panjang. Expected max " + (cols + 1) + ", diberikan: " + rowLine.length());
 
+            if(hasExtraKLine) {
+                if(i == 0) {
+                    int idx = rowLine.indexOf('K');
+                    if (idx != -1) {
+                        goalRow = -1;
+                        goalCol = idx;
+                        finali++;
+                        rowLine = gridLines.get(finali);
+                    }
+                }
+            }
+
             for (int j = 0; j < rowLine.length(); j++) {
                 char ch = rowLine.charAt(j);
-                if (ch == '.' || ch == ' ') continue;
-
-                if (j >= cols) {
-                    if (ch != 'K')
-                        throw new IllegalArgumentException("Format file tidak valid! Karakter di luar grid hanya boleh 'K'. Diberikan: '" + ch + "'");
-                    if (goalRow != -1)
+                if(!hasExtraKLine && j == 0 && ch == 'K') {
+                    leftK = true;
+                    if (goalRow != -2)
                         throw new IllegalArgumentException("Format file tidak valid! Duplikat 'K' ditemukan.");
                     goalRow = i;
-                    goalCol = j;
+                    goalCol = j-1;
+                    continue;
+                } else if (!hasExtraKLine && j == 0 && ch == ' ') {
+                    leftK = true;
+                    continue;
+                } else if (ch == '.') {
                     continue;
                 }
 
-                String key = i + "," + j;
-                if (occupied.contains(key))
-                    throw new IllegalArgumentException("Format file tidak valid! Tumpang tindih kendaraan di posisi (" + i + "," + j + ")");
-
-                if (ch == 'K') {
-                    if (goalRow != -1)
+                int finalj = leftK ? j-1 : j;
+                if (finalj >= cols) {
+                    if (ch != 'K')
+                        throw new IllegalArgumentException("Format file tidak valid! Karakter di luar grid hanya boleh 'K'. Diberikan: '" + ch + "'" + finalj);
+                    if (goalRow != -2)
                         throw new IllegalArgumentException("Format file tidak valid! Duplikat 'K' ditemukan.");
                     goalRow = i;
-                    goalCol = j;
-                } else {
-                    occupied.add(key);
-                    charToCells.computeIfAbsent(ch, k -> new ArrayList<>()).add(new int[]{i, j});
+                    goalCol = finalj;
+                    continue;
                 }
+
+
+                String key = i + "," + finalj;
+                System.out.println(ch+key);
+
+                    if (occupied.contains(key))
+                        throw new IllegalArgumentException("Format file tidak valid! Tumpang tindih kendaraan di posisi (" + i + "," + finalj + ")");
+
+                occupied.add(key);
+                charToCells.computeIfAbsent(ch, k -> new ArrayList<>()).add(new int[]{i, finalj});
             }
         }
 
-        if (hasExtraKLine) {
+        if (goalRow == -2 && hasExtraKLine) {
             String extra = gridLines.get(rows);
             int idx = extra.indexOf('K');
-            if (idx == -1 || goalRow != -1)
+            if ((idx == -1 && goalRow == -2) || (idx != -1 && goalRow != -2))
                 throw new IllegalArgumentException("Format file tidak valid! Baris tambahan tidak valid atau duplikat 'K'.");
             goalRow = rows;
             goalCol = idx;
         }
 
-        if (goalRow == -1 || goalCol == -1)
+        if (goalRow == -2 || goalCol == -2)
             throw new IllegalArgumentException("Format file tidak valid! Posisi goal 'K' tidak ditemukan.");
 
         Map<Character, Car> cars = new HashMap<>();

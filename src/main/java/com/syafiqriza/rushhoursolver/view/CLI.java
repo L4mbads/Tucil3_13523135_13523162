@@ -121,17 +121,17 @@ public class CLI {
 
             System.out.println();
 
-            if(solutionData.states != null) System.out.println("Solusi: ");
-            for(State state : solutionData.states) {
-                System.out.println(state.getBoard().getDetail());
-                state.getBoard().printBoard();
-                System.out.println();
-            }
+            if(solutionData.states != null) {
+                System.out.println("Solusi: ");
+                for(State state : solutionData.states) {
+                    System.out.println(state.getBoard().getDetail());
+                    state.getBoard().printBoard();
+                    System.out.println();
+                }
 
-            if(solutionData.states == null) {
-                System.out.println("Solusi tidak ditemukan");
-            } else {
                 System.out.println("Solusi ditemukan");
+            } else {
+                System.out.println("Solusi tidak ditemukan");
             }
             System.out.println();
 

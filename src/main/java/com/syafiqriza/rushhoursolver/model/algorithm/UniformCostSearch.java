@@ -17,7 +17,7 @@ public class UniformCostSearch extends Algorithm {
         Set<State> visited = new HashSet<>();
         PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingInt(n -> n.getState().getCumulativeCost()));
 
-        long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
         queue.add(new Node(initialState, 0, null));
 
         while(!queue.isEmpty()) {

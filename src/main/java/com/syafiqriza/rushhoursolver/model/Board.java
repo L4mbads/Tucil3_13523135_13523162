@@ -107,9 +107,9 @@ public class Board {
         Car car = cars.get(goalCarId);
         for (int[] cell : car.getOccupiedCells()) {
             if(car.isHorizontal()) {
-                cell[1]++;
+                cell[1] += goalCol < cell[1] ? -1 : 1;
             } else {
-                cell[0]++;
+                cell[0] += goalRow < cell[0] ? -1 : 1;
             }
             if (cell[0] == goalRow && cell[1] == goalCol) {
                 return true;

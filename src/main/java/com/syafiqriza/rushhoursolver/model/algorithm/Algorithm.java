@@ -6,7 +6,7 @@ public abstract class Algorithm {
 
     public class SolutionData {
         public int nodeCount;
-        public State[] states;
+        public State[] states = null;
         public double timeElapsedMs;
     }
 

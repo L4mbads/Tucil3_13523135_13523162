@@ -17,7 +17,7 @@ public class GreedyBestFirstSearch extends InformedSearch {
         Set<State> visited = new HashSet<>();
         PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingInt(n -> n.getState().getEstimatedCost()));
 
-        long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
         queue.add(new Node(initialState, 0, null));
 
         while(!queue.isEmpty()) {
@@ -54,9 +54,13 @@ public class GreedyBestFirstSearch extends InformedSearch {
                 }
             }
         }
+        System.out.println("done");
 
         long timeElapsedNs = System.nanoTime() - startTime;
+        System.out.println("done1");
         double timeElapsedMs = timeElapsedNs / 1_000_000.0;
+        System.out.println("done2");
         solutionData.timeElapsedMs = timeElapsedMs;
+        System.out.println("done3");
     }
 }
