@@ -25,14 +25,4 @@ public class Node {
 	public int getDepth() {
 		return depth;
 	}
-
-	// public Node[] expand() {
-		// State[] new_states = state.expand();
-		// Node[] new_nodes = new Node[new_states.length];
-
-		// for (int i = 0; i < new_states.length; i++)
-		// 	new_nodes[i] = new Node(new_states[i], depth + 1, this);
-
-		// return new_nodes;
-	// }
 }

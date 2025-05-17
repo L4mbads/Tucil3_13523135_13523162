@@ -4,7 +4,7 @@ setlocal
 set SRC_DIR=src\main\java\com\syafiqriza\rushhoursolver
 set BIN_DIR=bin
 set JAR_NAME=RushHour.jar
-set MAIN_CLASS=main.java.com.syafiqriza.rushhoursolver.Main
+set MAIN_CLASS=com.syafiqriza.rushhoursolver.Main
 
 if not exist %BIN_DIR% mkdir %BIN_DIR%
 

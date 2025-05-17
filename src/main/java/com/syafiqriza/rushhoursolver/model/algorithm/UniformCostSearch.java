@@ -13,33 +13,43 @@ import java.util.Set;
 public class UniformCostSearch extends Algorithm {
 
     private final Map<State, Integer> costSoFar = new HashMap<>();
-    Set<State> visited = new HashSet<>();
 
     public UniformCostSearch() {}
 
     @Override
     public void solve(State initialState) {
-        PriorityQueue<State> queue = new PriorityQueue<>(Comparator.comparingInt(n -> n.getTotalEstimatedCost()));
+        Set<State> visited = new HashSet<>();
+        PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingInt(n -> n.getState().getTotalEstimatedCost()));
 
-        System.out.println("solving ucs");
+        queue.add(new Node(initialState, 0, null));
 
-        queue.add(initialState);
         while(!queue.isEmpty()) {
-            State currentState = queue.poll();
+            Node currentNode = queue.poll();
+            State currentState = currentNode.getState();
+
+            // berhenti jika board sudah solved
             if(currentState.getBoard().isSolved()) {
-                System.out.println("DONE");
-                currentState.getBoard().printBoard();
-                break;
+                // resize array solusi
+    			this.solution = new State[currentNode.getDepth() + 1];
+
+    			Node pathNode = currentNode;
+
+                // isi array solusi dari indeks akhir ke awal menuju root node
+    			while (pathNode != null) {
+    				this.solution[pathNode.getDepth()] = pathNode.getState();
+    				pathNode = pathNode.getParent();
+    			}
+                return;
             }
+
+            // hanya proses state jika belum visited
             if (!visited.contains(currentState)) {
                 visited.add(currentState);
-                // currentState.printState();
-                System.out.println();
-                currentState.getBoard().printBoard();
 
+                // enqueue semua possible state
                 for(Board board : currentState.getBoard().getAllPossibleMovement()) {
                     State s = new State(board, currentState.getCumulativeCost() + 1, currentState.getCumulativeCost() + 1);
-                    queue.add(s);
+                    queue.add(new Node(s, currentNode.getDepth() + 1, currentNode));
                 }
             }
         }

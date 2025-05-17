@@ -18,6 +18,8 @@ public class Board {
     private final int goalRow;      // Baris tujuan yang harus dicapai mobil utama
     private final int goalCol;      // Kolom tujuan yang harus dicapai mobil utama
 
+    private final String detail;
+
     private final Map<Character, Car> cars;  // Map dari ID mobil ke objek Car
     private char[][] grid;             // Representasi visual grid papan saat ini
 
@@ -31,13 +33,14 @@ public class Board {
      * @param goalCol kolom tujuan
      */
     public Board(int rows, int cols, Map<Character, Car> cars,
-                 char goalCarId, int goalRow, int goalCol) {
+                 char goalCarId, int goalRow, int goalCol, String detail) {
         this.rows = rows;
         this.cols = cols;
         this.goalCarId = goalCarId;
         this.goalRow = goalRow;
         this.goalCol = goalCol;
         this.cars = cars;
+        this.detail = detail;
         buildGrid();
     }
 
@@ -152,7 +155,8 @@ public class Board {
             // coba gerakan ke arah negatif (mundur)
             int offset = -1;
             while (canMove(carId, offset)) {
-                Board newBoard = new Board(rows, cols, getCarsCopy(), goalCarId, goalRow, goalCol);
+                String movement = carId + (car.isHorizontal() ? "-kiri" : "-atas");
+                Board newBoard = new Board(rows, cols, getCarsCopy(), goalCarId, goalRow, goalCol, movement);
                 newBoard.applyMove(carId, offset);
                 possibleBoards.add(newBoard);
                 offset--; // coba gerakan lebih jauh
@@ -161,7 +165,8 @@ public class Board {
             // coba gerakan ke arah positif (maju)
             offset = 1;
             while (canMove(carId, offset)) {
-                Board newBoard = new Board(rows, cols, getCarsCopy(), goalCarId, goalRow, goalCol);
+                String movement = carId + (car.isHorizontal() ? "-kanan" : "-bawah");
+                Board newBoard = new Board(rows, cols, getCarsCopy(), goalCarId, goalRow, goalCol, movement);
                 newBoard.applyMove(carId, offset);
                 possibleBoards.add(newBoard);
                 offset++; // coba gerakan lebih jauh
@@ -179,4 +184,5 @@ public class Board {
     public char getGoalCarId() { return goalCarId; }
     public int getGoalRow() { return goalRow; }
     public int getGoalCol() { return goalCol; }
+    public String getDetail() { return detail; }
 }

@@ -125,6 +125,6 @@ public class Utils {
             throw new IllegalArgumentException("Format file tidak valid! Posisi goal (K) tidak searah dengan mobil 'P'. Diharapkan baris: " + goalCar.getRow() + " atau kolom: " + goalCar.getCol() + ", diberikan: (" + goalRow + "," + goalCol + ")");
         }
 
-        return new Board(rows, cols, cars, goalCarId, goalRow, goalCol);
+        return new Board(rows, cols, cars, goalCarId, goalRow, goalCol, "Start state");
     }
 }
