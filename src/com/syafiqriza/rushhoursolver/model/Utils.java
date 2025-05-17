@@ -1,8 +1,5 @@
 package com.syafiqriza.rushhoursolver.model;
 
-import com.syafiqriza.rushhoursolver.model.Board;
-import com.syafiqriza.rushhoursolver.model.Car;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -99,8 +96,8 @@ public class Utils {
         if (goalRow == -1 || goalCol == -1)
             throw new IllegalArgumentException("Format file tidak valid! Posisi goal 'K' tidak ditemukan.");
 
-        Map<String, Car> cars = new HashMap<>();
-        String goalCarId = "P";
+        Map<Character, Car> cars = new HashMap<>();
+        char goalCarId = 'P';
 
         for (Map.Entry<Character, List<int[]>> entry : charToCells.entrySet()) {
             char id = entry.getKey();
@@ -116,7 +113,7 @@ public class Utils {
             if (!isHorizontal && head[1] != second[1])
                 throw new IllegalArgumentException("Format file tidak valid! Mobil '" + id + "' tidak lurus horizontal atau vertikal.");
 
-            cars.put(String.valueOf(id), new Car(id, posList.size(), isHorizontal, head[0], head[1]));
+            cars.put(id, new Car(id, posList.size(), isHorizontal, head[0], head[1]));
         }
 
         if (!cars.containsKey(goalCarId))
