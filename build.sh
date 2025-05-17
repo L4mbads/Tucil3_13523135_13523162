@@ -3,7 +3,7 @@
 SRC_DIR=src/main/java/com/syafiqriza/rushhoursolver
 BIN_DIR=bin
 JAR_NAME=RushHour.jar
-MAIN_CLASS=main.java.com.syafiqriza.rushhoursolver.Main
+MAIN_CLASS=com.syafiqriza.rushhoursolver.Main
 
 mkdir -p $BIN_DIR
 

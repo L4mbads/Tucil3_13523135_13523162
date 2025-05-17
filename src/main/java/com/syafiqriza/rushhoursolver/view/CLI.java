@@ -99,6 +99,10 @@ public class CLI {
 
             algorithm.solve(new State(board, 0, 0));
 
+            for(State state : algorithm.getSolution()) {
+                System.out.println(state.getBoard().getDetail());
+                state.getBoard().printBoard();;
+            }
 
         }
     }

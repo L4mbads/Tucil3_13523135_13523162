@@ -44,7 +44,8 @@ public class State {
                         board.getCarsCopy(),
                         board.getGoalCarId(),
                         board.getGoalRow(),
-                        board.getGoalCol()
+                        board.getGoalCol(),
+                        board.getDetail()
                 ),
                 cumCost,
                 totalEstimatedCost
@@ -53,7 +54,8 @@ public class State {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof State other)) return false;
+        if (!(obj instanceof State)) return false;
+        State other = (State) obj;
         return carStates.equals(other.carStates);
     }
 
