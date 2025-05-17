@@ -134,6 +134,10 @@ public class Board {
         }
     }
 
+    /**
+     * Mendapatkan semua kemungkinan gerakan Car dari Board saat ini.
+     * @return Array berisi kemungkinan kondisi Board selanjutnya
+     */
     public Board[] getAllPossibleMovement() {
         List<Board> possibleBoards = new ArrayList<>();
 
@@ -146,7 +150,7 @@ public class Board {
                 Board newBoard = new Board(rows, cols, getCarsCopy(), goalCarId, goalRow, goalCol);
                 newBoard.applyMove(carId, offset);
                 possibleBoards.add(newBoard);
-                offset--; // Coba gerakan lebih jauh
+                offset--; // coba gerakan lebih jauh
             }
 
             // coba gerakan ke arah positif (maju)
