@@ -11,7 +11,7 @@ mkdir -p $BIN_DIR
 javac -d $BIN_DIR -sourcepath /$SRC_DIR @sources.txt
 rm sources.txt
 
-jar cfe $BIN_DIR/$JAR_NAME com.syafiqriza.rushhoursolver.Main bin/com/syafiqriza/rushhoursolver/Main.class
+jar cfe $BIN_DIR/$JAR_NAME $MAIN_CLASS -C $BIN_DIR .
 
 echo "Compilation and packaging complete. Run with:"
 echo "java -jar $BIN_DIR/$JAR_NAME"

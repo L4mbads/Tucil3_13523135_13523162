@@ -1,23 +1,22 @@
 @echo off
 setlocal
 
-set SRC_DIR=src\com\fachriza\imagequadtree
+set SRC_DIR=src\com\syafiqriza\rushhoursolver
 set BIN_DIR=bin
-set JAR_NAME=ImageCompressor.jar
-set MAIN_CLASS=com.fachriza.imagequadtree.ImageCompressor
-set MANIFEST=manifest/MANIFEST.MF
+set JAR_NAME=RushHour.jar
+set MAIN_CLASS=com.syafiqriza.rushhoursolver.Main
 
 if not exist %BIN_DIR% mkdir %BIN_DIR%
 
 dir /s /b %SRC_DIR%\*.java > sources.txt
-javac -d %BIN_DIR% -cp "lib/AnimatedGIFWriter.jar" -sourcepath %SRC_DIR% @sources.txt
+javac -d %BIN_DIR% -sourcepath %SRC_DIR% @sources.txt
 
 if %ERRORLEVEL% neq 0 (
     echo Compilation failed!
     exit /b %ERRORLEVEL%
 )
 
-jar cfm %BIN_DIR%\%JAR_NAME% %MANIFEST% -C %BIN_DIR% .
+jar cfe %BIN_DIR%\%JAR_NAME% %MAIN_CLASS% -C %BIN_DIR% .
 if %ERRORLEVEL% neq 0 (
     echo Failed to create JAR!
     exit /b %ERRORLEVEL%
