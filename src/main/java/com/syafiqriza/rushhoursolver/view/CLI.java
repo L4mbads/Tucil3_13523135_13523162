@@ -138,8 +138,16 @@ public class CLI {
             System.out.println("Waktu (ms)      : " + solutionData.timeElapsedMs);
             System.out.println("Node dikunjungi : " + solutionData.nodeCount);
 
+            if (solutionData.states != null)
+                    System.out.println("Jumlah langkah  : " + solutionData.states.length);
+
             System.out.println();
 
         }
+    }
+
+    public static void main(String[] args) {
+        CLI cli = new CLI();
+        cli.run();
     }
 }
