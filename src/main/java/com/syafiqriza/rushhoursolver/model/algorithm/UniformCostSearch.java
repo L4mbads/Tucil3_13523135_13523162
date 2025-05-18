@@ -24,6 +24,8 @@ public class UniformCostSearch extends Algorithm {
             Node currentNode = queue.poll();
             State currentState = currentNode.getState();
 
+            if(visited.contains(currentState)) continue;
+            visited.add(currentState);
             solutionData.nodeCount++;
 
             // berhenti jika board sudah solved
@@ -41,13 +43,12 @@ public class UniformCostSearch extends Algorithm {
                 break;
             }
 
-            // hanya proses state jika belum visited
-            if (!visited.contains(currentState)) {
-                visited.add(currentState);
 
-                // enqueue semua possible state
-                for(Board board : currentState.getBoard().getAllPossibleMovement()) {
-                    State s = new State(board, currentState.getCumulativeCost() + 1, currentState.getCumulativeCost() + 1);
+            // enqueue semua possible state
+            for(Board board : currentState.getBoard().getAllPossibleMovement()) {
+                State s = new State(board, currentState.getCumulativeCost() + 1, currentState.getCumulativeCost() + 1);
+                // hanya tambah state jika belum visited
+                if(!visited.contains(s)) {
                     queue.add(new Node(s, currentNode.getDepth() + 1, currentNode));
                 }
             }

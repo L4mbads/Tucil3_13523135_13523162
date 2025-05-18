@@ -24,6 +24,8 @@ public class GreedyBestFirstSearch extends InformedSearch {
             Node currentNode = queue.poll();
             State currentState = currentNode.getState();
 
+            if(visited.contains(currentState)) continue;
+            visited.add(currentState);
             solutionData.nodeCount++;
 
             // berhenti jika board sudah solved
@@ -41,26 +43,20 @@ public class GreedyBestFirstSearch extends InformedSearch {
                 break;
             }
 
-            // hanya proses state jika belum visited
-            if (!visited.contains(currentState)) {
-                visited.add(currentState);
 
-                // enqueue semua possible state
-                for(Board board : currentState.getBoard().getAllPossibleMovement()) {
-                    State s = new State(board, currentState.getCumulativeCost() + 1, heuristicModel.getValue(board));
-                    // s.getBoard().printBoard();
+            // enqueue semua possible state
+            for(Board board : currentState.getBoard().getAllPossibleMovement()) {
+                State s = new State(board, currentState.getCumulativeCost() + 1, heuristicModel.getValue(board));
+
+                // hanya tambah state jika belum visited
+                if(!visited.contains(s)) {
                     queue.add(new Node(s, currentNode.getDepth() + 1, currentNode));
-                    //
                 }
             }
         }
-        System.out.println("done");
 
         long timeElapsedNs = System.nanoTime() - startTime;
-        System.out.println("done1");
         double timeElapsedMs = timeElapsedNs / 1_000_000.0;
-        System.out.println("done2");
         solutionData.timeElapsedMs = timeElapsedMs;
-        System.out.println("done3");
     }
 }

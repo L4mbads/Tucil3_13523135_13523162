@@ -1,7 +1,9 @@
 package com.syafiqriza.rushhoursolver.model.algorithm;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 
@@ -14,15 +16,30 @@ public class AStar extends InformedSearch {
 
     @Override
     public void solve(State initialState) {
+
         Set<State> visited = new HashSet<>();
         PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingInt(n -> n.getState().getEstimatedCost() + n.getState().getCumulativeCost()));
+        Map<State, Integer> costSoFar = new HashMap<>();
 
         long startTime = System.nanoTime();
         queue.add(new Node(initialState, 0, null));
 
         while(!queue.isEmpty()) {
+
             Node currentNode = queue.poll();
             State currentState = currentNode.getState();
+
+            // hanya proses state jika belum visited
+            if(visited.contains(currentState)) continue;
+            visited.add(currentState);
+
+            int fn = currentState.getCumulativeCost() + currentState.getEstimatedCost();
+            if(costSoFar.containsKey(currentState) && costSoFar.get(currentState) < fn) {
+                visited.add(currentState);
+                continue;
+            }
+            costSoFar.put(currentState, currentState.getCumulativeCost() + currentState.getEstimatedCost());
+
 
             solutionData.nodeCount++;
 
@@ -41,16 +58,12 @@ public class AStar extends InformedSearch {
                 break;
             }
 
-            // hanya proses state jika belum visited
-            if (!visited.contains(currentState)) {
-                visited.add(currentState);
 
-                // enqueue semua possible state
-                for(Board board : currentState.getBoard().getAllPossibleMovement()) {
-                    State s = new State(board, currentState.getCumulativeCost() + 1, heuristicModel.getValue(board));
-                    // s.getBoard().printBoard();
+            // enqueue semua possible state
+            for(Board board : currentState.getBoard().getAllPossibleMovement()) {
+                State s = new State(board, currentState.getCumulativeCost() + 1, heuristicModel.getValue(board));
+                if(!visited.contains(s)|| costSoFar.get(currentState) > s.getCumulativeCost() + s.getEstimatedCost()) {
                     queue.add(new Node(s, currentNode.getDepth() + 1, currentNode));
-                    //
                 }
             }
         }

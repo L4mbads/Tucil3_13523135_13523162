@@ -14,15 +14,9 @@ public class Node {
 		this.parent = parent;
 	}
 
-	public State getState() {
-		return state;
-	}
+	public State getState() { return state; }
 
-	public Node getParent() {
-		return parent;
-	}
+	public Node getParent() { return parent; }
 
-	public int getDepth() {
-		return depth;
-	}
+	public int getDepth() { return depth; }
 }
