@@ -139,6 +139,10 @@ public class Utils {
             cars.put(id, new Car(id, posList.size(), isHorizontal, head[0], head[1]));
         }
 
+        if(jumlahNonP != cars.size() - 1) {
+            throw new IllegalArgumentException("Format file tidak valid! Jumlah mobil non-utama berjumlah " + (cars.size() - 1) + " dari " + jumlahNonP);
+        }
+
         if (!cars.containsKey(goalCarId))
             throw new IllegalArgumentException("Format file tidak valid! Mobil utama 'P' tidak ditemukan.");
 
