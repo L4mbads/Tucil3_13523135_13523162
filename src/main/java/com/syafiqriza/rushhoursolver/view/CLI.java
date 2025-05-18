@@ -6,8 +6,14 @@ import java.util.Scanner;
 import com.syafiqriza.rushhoursolver.model.Board;
 import com.syafiqriza.rushhoursolver.model.State;
 import com.syafiqriza.rushhoursolver.model.Utils;
-import com.syafiqriza.rushhoursolver.model.algorithm.*;
-import com.syafiqriza.rushhoursolver.model.heuristic.*;
+import com.syafiqriza.rushhoursolver.model.algorithm.AStar;
+import com.syafiqriza.rushhoursolver.model.algorithm.Algorithm;
+import com.syafiqriza.rushhoursolver.model.algorithm.GreedyBestFirstSearch;
+import com.syafiqriza.rushhoursolver.model.algorithm.InformedSearch;
+import com.syafiqriza.rushhoursolver.model.algorithm.UniformCostSearch;
+import com.syafiqriza.rushhoursolver.model.heuristic.BlockingHeuristic;
+import com.syafiqriza.rushhoursolver.model.heuristic.DistanceHeuristic;
+import com.syafiqriza.rushhoursolver.model.heuristic.Heuristic;
 
 public class CLI {
     public static void main(String[] args) {
@@ -119,8 +125,27 @@ public class CLI {
             Algorithm.SolutionData solutionData = algorithm.getSolution();
 
             System.out.println();
-            String output = Utils.formatSolutionOutput(solutionData);
-            System.out.println(output);
+            if (solutionData.states != null) {
+                System.out.println("Solusi: ");
+                for (State state : solutionData.states) {
+                    System.out.println(state.getBoard().getDetail());
+                    state.getBoard().printBoard();
+                    System.out.println();
+                }
+
+                System.out.println("Solusi ditemukan");
+            } else {
+                System.out.println("Solusi tidak ditemukan");
+            }
+            System.out.println();
+
+            System.out.println("Waktu (ms)      : " + solutionData.timeElapsedMs);
+            System.out.println("Node dikunjungi : " + solutionData.nodeCount);
+
+            if (solutionData.states != null)
+                System.out.println("Jumlah langkah  : " + (solutionData.states.length - 1));
+
+            System.out.println();
 
             System.out.print("Simpan hasil ke file .txt? (y/n): ");
             sc.nextLine(); // consume newline
@@ -129,7 +154,7 @@ public class CLI {
                 System.out.print("Masukkan nama file output (misal: solusi.txt): ");
                 String outputFileName = sc.nextLine();
                 try {
-                    Utils.saveSolutionToFile(outputFileName, output);
+                    Utils.saveSolutionToFile(outputFileName, Utils.formatSolutionOutput(solutionData));
                     System.out.println("Solusi berhasil disimpan ke " + outputFileName);
                 } catch (IOException e) {
                     System.err.println("Gagal menyimpan file: " + e.getMessage());
