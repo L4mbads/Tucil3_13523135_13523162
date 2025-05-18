@@ -99,8 +99,12 @@ public class Utils {
                 String key = i + "," + finalj;
                 System.out.println(ch+key);
 
-                    if (occupied.contains(key))
-                        throw new IllegalArgumentException("Format file tidak valid! Tumpang tindih kendaraan di posisi (" + i + "," + finalj + ")");
+                if(ch == 'K') {
+                    throw new IllegalArgumentException("Format file tidak valid! Mobil tidak boleh memiliki simbol K");
+                }
+
+                if (occupied.contains(key))
+                    throw new IllegalArgumentException("Format file tidak valid! Tumpang tindih kendaraan di posisi (" + i + "," + finalj + ")");
 
                 occupied.add(key);
                 charToCells.computeIfAbsent(ch, k -> new ArrayList<>()).add(new int[]{i, finalj});
