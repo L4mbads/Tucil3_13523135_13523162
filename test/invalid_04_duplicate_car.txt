@@ -1,8 +1,10 @@
-6 6
-9
- ..AABB
- .CCD..
- .E.DFF
-K.E.PPG
- .E..HG
- .PPPHG
+7 9
+14
+        K
+..AAABBBB
+.......CC
+D...E..FF
+D...E.GGG
+D..EIIJJJ
+LM.E..NOP
+LMQQQQNOP
