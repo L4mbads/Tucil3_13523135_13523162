@@ -184,5 +184,7 @@ public class Board {
     public char getGoalCarId() { return goalCarId; }
     public int getGoalRow() { return goalRow; }
     public int getGoalCol() { return goalCol; }
+    public int getGoalRowClamped() { return Math.max(0, Math.min(goalRow, rows - 1)); }
+    public int getGoalColClamped() { return Math.max(0, Math.min(goalCol, cols - 1)); }
     public String getDetail() { return detail; }
 }
