@@ -1,10 +1,10 @@
 package com.syafiqriza.rushhoursolver.model;
 
-import java.util.Map;
-import java.util.HashMap;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Merepresentasikan papan permainan Rush Hour.
@@ -134,9 +134,28 @@ public class Board {
      * Menampilkan papan ke console.
      */
     public void printBoard() {
+        var grid = getGrid();
+        if(goalRow == -1) {
+            for(int j = 0; j < cols; j++) {
+            System.out.print(goalCol == j ? "K " : "  ");
+            }
+            System.out.println();
+        }
         for (int i = 0; i < rows; i++) {
+            if(goalCol == -1) {
+                System.out.print(goalRow == i ? "K " : "  ");
+            }
             for (int j = 0; j < cols; j++) {
                 System.out.print(grid[i][j] + " ");
+            }
+            if(goalCol == cols) {
+                System.out.print(goalRow == i ? "K " : "  ");
+            }
+            System.out.println();
+        }
+        if(goalRow == rows) {
+            for(int j = 0; j < cols; j++) {
+            System.out.print(goalCol == j ? "K " : "  ");
             }
             System.out.println();
         }
