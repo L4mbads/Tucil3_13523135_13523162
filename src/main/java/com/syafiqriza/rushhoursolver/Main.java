@@ -1,10 +1,10 @@
 package com.syafiqriza.rushhoursolver;
 
 import com.syafiqriza.rushhoursolver.view.GUI;
+import com.syafiqriza.rushhoursolver.view.CLI;
 
 import java.util.Arrays;
 
-import com.syafiqriza.rushhoursolver.view.CLI;
 
 public class Main {
     public static void main(String[] args) {

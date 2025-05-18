@@ -101,7 +101,6 @@ public class Utils {
 
 
                 String key = i + "," + finalj;
-                System.out.println(ch+key);
 
                 if(ch == 'K') {
                     throw new IllegalArgumentException("Format file tidak valid! Mobil tidak boleh memiliki simbol K");
