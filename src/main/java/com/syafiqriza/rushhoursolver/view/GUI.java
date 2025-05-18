@@ -313,7 +313,7 @@ public class GUI extends Application {
         titleText.setFill(Color.WHITE);
         titleText.setStyle("-fx-font-size: 22px; -fx-font-weight: bold;");
 
-        Text  infoText = styledLabel2(
+        Text infoText = styledLabel2(
                 "Waktu Pencarian: " + solutionData.timeElapsedMs + " ms\n" +
                         "Jumlah Simpul: " + solutionData.nodeCount);
         if (found) {
@@ -323,7 +323,6 @@ public class GUI extends Application {
                             "Jumlah Langkah: " + (solutionData.states.length - 1));
             infoText.setStyle("-fx-font-size: 14px;");
             infoText.setFill(Color.LIGHTGRAY);
-
         }
 
         VBox card = new VBox(20);
@@ -360,10 +359,30 @@ public class GUI extends Application {
             runReplay.run();
             replayButton.setOnAction(e -> runReplay.run());
 
+            Button saveButton = createStyledButton("\uD83D\uDCBE Simpan Solusi");
+            saveButton.setOnAction(e -> {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Simpan Solusi sebagai .txt");
+                fileChooser.setInitialFileName("solusi.txt");
+                File file = fileChooser.showSaveDialog(stage);
+                if (file != null) {
+                    try {
+                        String content = Utils.formatSolutionOutput(solutionData);
+                        Utils.saveSolutionToFile(file.getAbsolutePath(), content);
+                        showAlert("Berhasil", "Solusi berhasil disimpan ke " + file.getName());
+                    } catch (IOException ex) {
+                        showAlert("Gagal", "Gagal menyimpan solusi: " + ex.getMessage());
+                    }
+                }
+            });
+
             Button backButton = createStyledButton("\u2B05 Kembali");
             backButton.setOnAction(e -> start(stage));
 
-            card.getChildren().addAll(titleText, contentBox, replayButton, backButton);
+            HBox buttonBox = new HBox(20, replayButton, saveButton, backButton);
+            buttonBox.setAlignment(Pos.CENTER);
+
+            card.getChildren().addAll(titleText, contentBox, buttonBox);
         } else {
             Button backButton = createStyledButton("\u2B05 Kembali");
             backButton.setOnAction(e -> start(stage));
@@ -404,6 +423,15 @@ public class GUI extends Application {
         label.setFill(Color.WHITE);
         return label;
     }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
 
     public static void main(String[] args) {
         launch(args);

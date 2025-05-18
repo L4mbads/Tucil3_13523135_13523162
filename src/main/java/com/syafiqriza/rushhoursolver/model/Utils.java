@@ -1,7 +1,11 @@
 package com.syafiqriza.rushhoursolver.model;
 
+import com.syafiqriza.rushhoursolver.model.algorithm.Algorithm;
+
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class Utils {
@@ -175,4 +179,33 @@ public class Utils {
 
         return new Board(rows, cols, cars, goalCarId, goalRow, goalCol, "Start state");
     }
+
+    public static String formatSolutionOutput(Algorithm.SolutionData solutionData) {
+        StringBuilder outputBuilder = new StringBuilder();
+
+        if (solutionData.states != null) {
+            outputBuilder.append("Solusi:\n");
+            for (State state : solutionData.states) {
+                outputBuilder.append(state.getBoard().getDetail()).append("\n");
+                outputBuilder.append(state.getBoard().toString()).append("\n\n");
+            }
+            outputBuilder.append("Solusi ditemukan\n");
+        } else {
+            outputBuilder.append("Solusi tidak ditemukan\n");
+        }
+
+        outputBuilder.append("\nWaktu (ms)      : ").append(solutionData.timeElapsedMs).append("\n");
+        outputBuilder.append("Node dikunjungi : ").append(solutionData.nodeCount).append("\n");
+        if (solutionData.states != null)
+            outputBuilder.append("Jumlah langkah  : ").append(solutionData.states.length - 1).append("\n");
+
+        return outputBuilder.toString();
+    }
+
+    public static void saveSolutionToFile(String fileName, String content) throws IOException {
+        try (FileWriter writer = new FileWriter(fileName)) {
+            writer.write(content);
+        }
+    }
+
 }

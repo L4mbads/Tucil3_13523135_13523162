@@ -192,6 +192,48 @@ public class Board {
         }
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        char[][] grid = getGrid();
+
+        if (goalRow == -1) {
+            for (int j = 0; j < cols; j++) {
+                char c = (goalCol == j) ? 'K' : ' ';
+                sb.append(c).append(" ");
+            }
+            sb.append("\n");
+        }
+
+        for (int i = 0; i < rows; i++) {
+            if (goalCol == -1) {
+                char c = (goalRow == i) ? 'K' : ' ';
+                sb.append(c).append(" ");
+            }
+
+            for (int j = 0; j < cols; j++) {
+                sb.append(grid[i][j]).append(" ");
+            }
+
+            if (goalCol == cols) {
+                char c = (goalRow == i) ? 'K' : ' ';
+                sb.append(c).append(" ");
+            }
+            sb.append("\n");
+        }
+
+        if (goalRow == rows) {
+            for (int j = 0; j < cols; j++) {
+                char c = (goalCol == j) ? 'K' : ' ';
+                sb.append(c).append(" ");
+            }
+            sb.append("\n");
+        }
+
+        return sb.toString();
+    }
+
+
     /**
      * Mendapatkan semua kemungkinan gerakan Car dari Board saat ini.
      * @return Array berisi kemungkinan kondisi Board selanjutnya
