@@ -11,7 +11,7 @@ Pengguna dapat memilih algoritma dan heuristik (untuk GBFS dan A\*) lalu memuat 
 ### Persyaratan
 
 * **JDK 21**
-* **Gradle (opsional)** jika kamu ingin menjalankan langsung via project, bukan jar
+* **Gradle (opsional)** untuk compile dengan GUI
 * JavaFX sudah disertakan otomatis melalui konfigurasi Gradle
 
 ---
@@ -30,10 +30,15 @@ git clone https://github.com/username/repo-rush-hour.git
 ```
 
 ---
-### Compile
+### Compile CLI
 ```bash
 cd ./path-ke-folder
 ./build.sh
+```
+### Compile GUI + CLI
+```bash
+cd ./path-ke-folder
+gradle clean shadowJar
 ```
 
 ### Menjalankan Program
