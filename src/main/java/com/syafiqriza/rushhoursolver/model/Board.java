@@ -130,6 +130,39 @@ public class Board {
         return copy;
     }
 
+
+    /**
+     * Format ANSI untuk simbol Board
+     * @param carID
+     * @return string berisi ID kendaraan dengan warna
+     */
+    private String getFormattedBoardSymbol(char carID) {
+        StringBuilder formatted = new StringBuilder();
+        formatted.append("\u001B[");
+        if(carID == getDetail().charAt(0)) {
+            formatted.append("1;"); // bold
+        }
+        if (carID == 'P') {
+            formatted.append("31"); // hijau
+        } else if (carID == 'K') {
+            formatted.append("32"); // hijau
+        } else if (carID == getDetail().charAt(0)) {
+            formatted.append("34"); // bold
+        } else {
+            formatted.append("0");
+        }
+
+        // String detail = getDetail();
+        // try {
+        //     int number = Integer.parseInt(detail.replaceAll("[^\\d-]", ""));
+        // } catch (NumberFormatException e) {
+        //     formatted.append(";0"); // Default color if no number is found
+        // }
+
+        formatted.append("m").append(carID).append("\u001B[0m");
+        return formatted.toString();
+    }
+
     /**
      * Menampilkan papan ke console.
      */
@@ -137,25 +170,30 @@ public class Board {
         var grid = getGrid();
         if(goalRow == -1) {
             for(int j = 0; j < cols; j++) {
-            System.out.print(goalCol == j ? "K " : "  ");
+                String symbol = getFormattedBoardSymbol(goalCol == j ? 'K' : ' ');
+                System.out.print(symbol + " ");
             }
             System.out.println();
         }
         for (int i = 0; i < rows; i++) {
             if(goalCol == -1) {
-                System.out.print(goalRow == i ? "K " : "  ");
+                String symbol = getFormattedBoardSymbol(goalRow == i ? 'K' : ' ');
+                System.out.print(symbol + " ");
             }
             for (int j = 0; j < cols; j++) {
-                System.out.print(grid[i][j] + " ");
+                String symbol = getFormattedBoardSymbol(grid[i][j]);
+                System.out.print(symbol + " ");
             }
             if(goalCol == cols) {
-                System.out.print(goalRow == i ? "K " : "  ");
+                String symbol = getFormattedBoardSymbol(goalRow == i ? 'K' : ' ');
+                System.out.print(symbol + " ");
             }
             System.out.println();
         }
         if(goalRow == rows) {
             for(int j = 0; j < cols; j++) {
-            System.out.print(goalCol == j ? "K " : "  ");
+                String symbol = getFormattedBoardSymbol(goalCol == j ? 'K' : ' ');
+                System.out.print(symbol + " ");
             }
             System.out.println();
         }
