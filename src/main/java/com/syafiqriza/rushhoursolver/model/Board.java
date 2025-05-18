@@ -147,17 +147,10 @@ public class Board {
         } else if (carID == 'K') {
             formatted.append("32"); // hijau
         } else if (carID == getDetail().charAt(0)) {
-            formatted.append("34"); // bold
+            formatted.append("34"); // biru
         } else {
             formatted.append("0");
         }
-
-        // String detail = getDetail();
-        // try {
-        //     int number = Integer.parseInt(detail.replaceAll("[^\\d-]", ""));
-        // } catch (NumberFormatException e) {
-        //     formatted.append(";0"); // Default color if no number is found
-        // }
 
         formatted.append("m").append(carID).append("\u001B[0m");
         return formatted.toString();

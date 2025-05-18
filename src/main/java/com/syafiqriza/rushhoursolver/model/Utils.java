@@ -128,13 +128,30 @@ public class Utils {
             if (posList.size() < 2)
                 throw new IllegalArgumentException("Format file tidak valid! Mobil '" + id + "' panjangnya kurang dari 2. Diberikan: " + posList.size());
 
+
             posList.sort(Comparator.comparingInt(p -> p[0] * cols + p[1]));
             int[] head = posList.get(0);
             int[] second = posList.get(1);
 
+
             boolean isHorizontal = head[0] == second[0];
             if (!isHorizontal && head[1] != second[1])
                 throw new IllegalArgumentException("Format file tidak valid! Mobil '" + id + "' tidak lurus horizontal atau vertikal.");
+
+            // cek gap
+            if (isHorizontal) {
+                for (int i = 1; i < posList.size(); i++) {
+                    if (posList.get(i)[1] != posList.get(i - 1)[1] + 1) {
+                        throw new IllegalArgumentException("Format file tidak valid! Mobil '" + id + "' memiliki celah pada kolom.");
+                    }
+                }
+            } else {
+                for (int i = 1; i < posList.size(); i++) {
+                    if (posList.get(i)[0] != posList.get(i - 1)[0] + 1) {
+                        throw new IllegalArgumentException("Format file tidak valid! Mobil '" + id + "' memiliki celah pada baris.");
+                    }
+                }
+            }
 
             cars.put(id, new Car(id, posList.size(), isHorizontal, head[0], head[1]));
         }

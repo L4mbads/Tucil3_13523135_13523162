@@ -6,15 +6,8 @@ import java.util.Scanner;
 import com.syafiqriza.rushhoursolver.model.Board;
 import com.syafiqriza.rushhoursolver.model.State;
 import com.syafiqriza.rushhoursolver.model.Utils;
-import com.syafiqriza.rushhoursolver.model.algorithm.AStar;
-import com.syafiqriza.rushhoursolver.model.algorithm.Algorithm;
-import com.syafiqriza.rushhoursolver.model.algorithm.GreedyBestFirstSearch;
-import com.syafiqriza.rushhoursolver.model.algorithm.InformedSearch;
-import com.syafiqriza.rushhoursolver.model.algorithm.UniformCostSearch;
-import com.syafiqriza.rushhoursolver.model.algorithm.Algorithm.SolutionData;
-import com.syafiqriza.rushhoursolver.model.heuristic.BlockingHeuristic;
-import com.syafiqriza.rushhoursolver.model.heuristic.DistanceHeuristic;
-import com.syafiqriza.rushhoursolver.model.heuristic.Heuristic;
+import com.syafiqriza.rushhoursolver.model.algorithm.*;
+import com.syafiqriza.rushhoursolver.model.heuristic.*;
 
 public class CLI {
     public static void main(String[] args) {
@@ -123,7 +116,7 @@ public class CLI {
 
             algorithm.solve(new State(board, 0, 0));
 
-            SolutionData solutionData = algorithm.getSolution();
+            Algorithm.SolutionData solutionData = algorithm.getSolution();
 
             System.out.println();
 
