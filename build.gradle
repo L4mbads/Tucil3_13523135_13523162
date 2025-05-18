@@ -3,6 +3,8 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
+buildDir = 'bin'
+
 repositories {
     mavenCentral()
 }
@@ -15,7 +17,7 @@ dependencies {
 }
 
 application {
-    mainClass = 'com.syafiqriza.rushhoursolver.Main'
+    mainClass = 'com.syafiqriza.rushhoursolver.view.GUI'
 }
 
 java {
@@ -31,4 +33,9 @@ run {
                 "--add-modules", "javafx.controls,javafx.fxml"
         ]
     }
+}
+
+javafx {
+    version = "21"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
