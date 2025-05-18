@@ -1,0 +1,236 @@
+Solusi:
+Start state
+    K       
+A B B C C D 
+A E P F F D 
+G E P . H H 
+G E I I J J 
+N N N L . . 
+. . . L M M 
+
+
+H-kiri
+    K       
+A B B C C D 
+A E P F F D 
+G E P H H . 
+G E I I J J 
+N N N L . . 
+. . . L M M 
+
+
+D-bawah
+    K       
+A B B C C . 
+A E P F F D 
+G E P H H D 
+G E I I J J 
+N N N L . . 
+. . . L M M 
+
+
+C-kanan
+    K       
+A B B . C C 
+A E P F F D 
+G E P H H D 
+G E I I J J 
+N N N L . . 
+. . . L M M 
+
+
+B-kanan
+    K       
+A . B B C C 
+A E P F F D 
+G E P H H D 
+G E I I J J 
+N N N L . . 
+. . . L M M 
+
+
+E-atas
+    K       
+A E B B C C 
+A E P F F D 
+G E P H H D 
+G . I I J J 
+N N N L . . 
+. . . L M M 
+
+
+I-kiri
+    K       
+A E B B C C 
+A E P F F D 
+G E P H H D 
+G I I . J J 
+N N N L . . 
+. . . L M M 
+
+
+L-atas
+    K       
+A E B B C C 
+A E P F F D 
+G E P H H D 
+G I I L J J 
+N N N L . . 
+. . . . M M 
+
+
+M-kiri
+    K       
+A E B B C C 
+A E P F F D 
+G E P H H D 
+G I I L J J 
+N N N L . . 
+. M M . . . 
+
+
+L-bawah
+    K       
+A E B B C C 
+A E P F F D 
+G E P H H D 
+G I I . J J 
+N N N L . . 
+. M M L . . 
+
+
+J-kiri
+    K       
+A E B B C C 
+A E P F F D 
+G E P H H D 
+G I I J J . 
+N N N L . . 
+. M M L . . 
+
+
+D-bawah
+    K       
+A E B B C C 
+A E P F F . 
+G E P H H . 
+G I I J J . 
+N N N L . D 
+. M M L . D 
+
+
+H-kanan
+    K       
+A E B B C C 
+A E P F F . 
+G E P . H H 
+G I I J J . 
+N N N L . D 
+. M M L . D 
+
+
+F-kanan
+    K       
+A E B B C C 
+A E P . F F 
+G E P . H H 
+G I I J J . 
+N N N L . D 
+. M M L . D 
+
+
+J-kanan
+    K       
+A E B B C C 
+A E P . F F 
+G E P . H H 
+G I I . J J 
+N N N L . D 
+. M M L . D 
+
+
+L-atas
+    K       
+A E B B C C 
+A E P L F F 
+G E P L H H 
+G I I . J J 
+N N N . . D 
+. M M . . D 
+
+
+N-kanan
+    K       
+A E B B C C 
+A E P L F F 
+G E P L H H 
+G I I . J J 
+. N N N . D 
+. M M . . D 
+
+
+G-bawah
+    K       
+A E B B C C 
+A E P L F F 
+. E P L H H 
+G I I . J J 
+G N N N . D 
+. M M . . D 
+
+
+I-kanan
+    K       
+A E B B C C 
+A E P L F F 
+. E P L H H 
+G . I I J J 
+G N N N . D 
+. M M . . D 
+
+
+A-bawah
+    K       
+. E B B C C 
+A E P L F F 
+A E P L H H 
+G . I I J J 
+G N N N . D 
+. M M . . D 
+
+
+E-bawah
+    K       
+. . B B C C 
+A E P L F F 
+A E P L H H 
+G E I I J J 
+G N N N . D 
+. M M . . D 
+
+
+B-kiri
+    K       
+B B . . C C 
+A E P L F F 
+A E P L H H 
+G E I I J J 
+G N N N . D 
+. M M . . D 
+
+
+P-atas
+    K       
+B B P . C C 
+A E P L F F 
+A E . L H H 
+G E I I J J 
+G N N N . D 
+. M M . . D 
+
+
+Solusi ditemukan
+
+Waktu (ms)      : 22.166
+Node dikunjungi : 617
+Jumlah langkah  : 22

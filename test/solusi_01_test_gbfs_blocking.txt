@@ -1,0 +1,34 @@
+Solusi:
+Start state
+. . . P 
+. A . P 
+. A B B 
+      K 
+
+
+A-atas
+. A . P 
+. A . P 
+. . B B 
+      K 
+
+
+B-kiri
+. A . P 
+. A . P 
+B B . . 
+      K 
+
+
+P-bawah
+. A . . 
+. A . P 
+B B . P 
+      K 
+
+
+Solusi ditemukan
+
+Waktu (ms)      : 1.1813
+Node dikunjungi : 5
+Jumlah langkah  : 3
