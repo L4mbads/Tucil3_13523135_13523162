@@ -138,7 +138,7 @@ public class CLI {
             System.out.println("Node dikunjungi : " + solutionData.nodeCount);
 
             if (solutionData.states != null)
-                System.out.println("Jumlah langkah  : " + solutionData.states.length);
+                System.out.println("Jumlah langkah  : " + (solutionData.states.length - 1));
 
             System.out.println();
 

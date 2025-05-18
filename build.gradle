@@ -1,6 +1,7 @@
 plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.1.0'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 buildDir = 'bin'
@@ -11,13 +12,14 @@ repositories {
 
 def javafxVersion = '21'
 
+
 dependencies {
     implementation "org.openjfx:javafx-controls:${javafxVersion}"
     implementation "org.openjfx:javafx-fxml:${javafxVersion}"
 }
 
 application {
-    mainClass = 'com.syafiqriza.rushhoursolver.view.GUI'
+    mainClass = 'com.syafiqriza.rushhoursolver.Main'
 }
 
 java {
@@ -38,4 +40,29 @@ run {
 javafx {
     version = "21"
     modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+
+// fix task dependencies
+tasks.named('startShadowScripts') {
+    dependsOn tasks.named('shadowJar')
+}
+tasks.named('distTar') {
+    dependsOn tasks.named('shadowJar')
+}
+tasks.named('distZip') {
+    dependsOn tasks.named('shadowJar')
+}
+tasks.named('startScripts') {
+    dependsOn tasks.named('shadowJar')
+}
+tasks.named('startShadowScripts') {
+    dependsOn tasks.named('jar')
+}
+
+shadowJar {
+    archiveClassifier.set('')
+    manifest {
+        attributes 'Main-Class': application.mainClass.get()
+    }
 }
