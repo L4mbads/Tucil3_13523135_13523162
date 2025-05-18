@@ -261,6 +261,9 @@ public class GUI extends Application {
                 protected void succeeded() {
                     showSolutionWindow(stage, found);
                 }
+                protected void failed() {
+                    showSolutionWindow(stage, false);
+                }
             };
             new Thread(solveTask).start();
         });
@@ -310,64 +313,66 @@ public class GUI extends Application {
         titleText.setFill(Color.WHITE);
         titleText.setStyle("-fx-font-size: 22px; -fx-font-weight: bold;");
 
-        Text infoText = styledLabel2(
+        Text  infoText = styledLabel2(
                 "Waktu Pencarian: " + solutionData.timeElapsedMs + " ms\n" +
-                        "Jumlah Simpul: " + solutionData.nodeCount + "\n" +
-                        "Jumlah Langkah: " + solutionData.states.length);
-        infoText.setStyle("-fx-font-size: 14px;");
-        infoText.setFill(Color.LIGHTGRAY);
+                        "Jumlah Simpul: " + solutionData.nodeCount);
+        if (found) {
+            infoText = styledLabel2(
+                    "Waktu Pencarian: " + solutionData.timeElapsedMs + " ms\n" +
+                            "Jumlah Simpul: " + solutionData.nodeCount + "\n" +
+                            "Jumlah Langkah: " + (solutionData.states.length - 1));
+            infoText.setStyle("-fx-font-size: 14px;");
+            infoText.setFill(Color.LIGHTGRAY);
 
-        BoardView boardView = new BoardView();
-        double scale = Math.min(1.0, 600.0 / (board.getCols() * 60));
-        boardView.setScaleX(scale);
-        boardView.setScaleY(scale);
+        }
 
-        HBox contentBox = new HBox(40, boardView, infoText);
-        contentBox.setAlignment(Pos.CENTER);
-
-        Button replayButton = createStyledButton("🔁 Replay Solusi");
-        replayButton.setDisable(!found || solutionData.states == null || solutionData.states.length == 0);
-
-        Button backButton = createStyledButton("⬅ Kembali");
-        backButton.setOnAction(e -> start(stage));
-
-        VBox card = new VBox(20, titleText, contentBox, replayButton, backButton);
+        VBox card = new VBox(20);
         card.setAlignment(Pos.CENTER);
         card.setPadding(new Insets(30));
         card.setMaxWidth(600);
         card.setStyle("-fx-background-color: rgba(255, 255, 255, 0.05); -fx-background-radius: 15;");
 
+        if (found && solutionData.states != null) {
+            BoardView boardView = new BoardView();
+            double scale = Math.min(1.0, 600.0 / (board.getCols() * 60));
+            boardView.setScaleX(scale);
+            boardView.setScaleY(scale);
+
+            HBox contentBox = new HBox(40, boardView, infoText);
+            contentBox.setAlignment(Pos.CENTER);
+
+            Button replayButton = createStyledButton("\uD83D\uDD01 Replay Solusi");
+
+            Runnable runReplay = () -> {
+                Task<Void> animationTask = new Task<>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        for (var state : solutionData.states) {
+                            Platform.runLater(() -> boardView.draw(state));
+                            Thread.sleep(500);
+                        }
+                        return null;
+                    }
+                };
+                new Thread(animationTask).start();
+            };
+
+            runReplay.run();
+            replayButton.setOnAction(e -> runReplay.run());
+
+            Button backButton = createStyledButton("\u2B05 Kembali");
+            backButton.setOnAction(e -> start(stage));
+
+            card.getChildren().addAll(titleText, contentBox, replayButton, backButton);
+        } else {
+            Button backButton = createStyledButton("\u2B05 Kembali");
+            backButton.setOnAction(e -> start(stage));
+            card.getChildren().addAll(titleText, infoText, backButton);
+        }
+
         layout.setCenter(card);
         Scene solutionScene = new Scene(layout, 800, 600);
         stage.setScene(solutionScene);
-
-        Runnable runReplay = () -> {
-            Task<Void> animationTask = new Task<>() {
-                @Override
-                protected Void call() throws Exception {
-                    for (var state : solutionData.states) {
-                        Platform.runLater(() -> boardView.draw(state));
-                        Thread.sleep(500);
-                    }
-                    return null;
-                }
-            };
-            new Thread(animationTask).start();
-        };
-
-        if (found && solutionData.states != null && solutionData.states.length != 0) {
-            runReplay.run();
-            replayButton.setOnAction(e -> runReplay.run());
-        }
-    }
-
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     private Button createStyledButton(String text) {
