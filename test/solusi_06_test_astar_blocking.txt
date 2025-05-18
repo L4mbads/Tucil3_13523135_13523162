@@ -1,0 +1,116 @@
+Solusi:
+Start state
+                K 
+. . A A A B B B B 
+. . . . . . . C C 
+D . . . E . . F F 
+D . . . E . G G G 
+D . . H I I J J J 
+L M . H . . N O P 
+L M Q Q Q Q N O P 
+
+
+C-kiri
+                K 
+. . A A A B B B B 
+. C C . . . . . . 
+D . . . E . . F F 
+D . . . E . G G G 
+D . . H I I J J J 
+L M . H . . N O P 
+L M Q Q Q Q N O P 
+
+
+A-kiri
+                K 
+A A A . . B B B B 
+. C C . . . . . . 
+D . . . E . . F F 
+D . . . E . G G G 
+D . . H I I J J J 
+L M . H . . N O P 
+L M Q Q Q Q N O P 
+
+
+B-kiri
+                K 
+A A A B B B B . . 
+. C C . . . . . . 
+D . . . E . . F F 
+D . . . E . G G G 
+D . . H I I J J J 
+L M . H . . N O P 
+L M Q Q Q Q N O P 
+
+
+F-kiri
+                K 
+A A A B B B B . . 
+. C C . . . . . . 
+D . . . E . F F . 
+D . . . E . G G G 
+D . . H I I J J J 
+L M . H . . N O P 
+L M Q Q Q Q N O P 
+
+
+H-atas
+                K 
+A A A B B B B . . 
+. C C . . . . . . 
+D . . H E . F F . 
+D . . H E . G G G 
+D . . . I I J J J 
+L M . . . . N O P 
+L M Q Q Q Q N O P 
+
+
+G-kiri
+                K 
+A A A B B B B . . 
+. C C . . . . . . 
+D . . H E . F F . 
+D . . H E G G G . 
+D . . . I I J J J 
+L M . . . . N O P 
+L M Q Q Q Q N O P 
+
+
+I-kiri
+                K 
+A A A B B B B . . 
+. C C . . . . . . 
+D . . H E . F F . 
+D . . H E G G G . 
+D I I . . . J J J 
+L M . . . . N O P 
+L M Q Q Q Q N O P 
+
+
+J-kiri
+                K 
+A A A B B B B . . 
+. C C . . . . . . 
+D . . H E . F F . 
+D . . H E G G G . 
+D I I J J J . . . 
+L M . . . . N O P 
+L M Q Q Q Q N O P 
+
+
+P-atas
+                K 
+A A A B B B B . P 
+. C C . . . . . P 
+D . . H E . F F . 
+D . . H E G G G . 
+D I I J J J . . . 
+L M . . . . N O . 
+L M Q Q Q Q N O . 
+
+
+Solusi ditemukan
+
+Waktu (ms)      : 7941.126
+Node dikunjungi : 50859
+Jumlah langkah  : 9

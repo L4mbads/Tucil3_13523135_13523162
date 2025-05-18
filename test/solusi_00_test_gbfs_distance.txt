@@ -1,0 +1,636 @@
+Solusi:
+Start state
+A A B . . F   
+. . B C D F   
+G P P C D F K 
+G H . I I I   
+G H J . . .   
+L L J M M .   
+
+
+C-atas
+A A B C . F   
+. . B C D F   
+G P P . D F K 
+G H . I I I   
+G H J . . .   
+L L J M M .   
+
+
+P-kanan
+A A B C . F   
+. . B C D F   
+G . P P D F K 
+G H . I I I   
+G H J . . .   
+L L J M M .   
+
+
+D-atas
+A A B C D F   
+. . B C D F   
+G . P P . F K 
+G H . I I I   
+G H J . . .   
+L L J M M .   
+
+
+P-kanan
+A A B C D F   
+. . B C D F   
+G . . P P F K 
+G H . I I I   
+G H J . . .   
+L L J M M .   
+
+
+M-kanan
+A A B C D F   
+. . B C D F   
+G . . P P F K 
+G H . I I I   
+G H J . . .   
+L L J . M M   
+
+
+J-atas
+A A B C D F   
+. . B C D F   
+G . J P P F K 
+G H J I I I   
+G H . . . .   
+L L . . M M   
+
+
+H-atas
+A A B C D F   
+. H B C D F   
+G H J P P F K 
+G . J I I I   
+G . . . . .   
+L L . . M M   
+
+
+M-kiri
+A A B C D F   
+. H B C D F   
+G H J P P F K 
+G . J I I I   
+G . . . . .   
+L L M M . .   
+
+
+G-atas
+A A B C D F   
+G H B C D F   
+G H J P P F K 
+G . J I I I   
+. . . . . .   
+L L M M . .   
+
+
+M-kanan
+A A B C D F   
+G H B C D F   
+G H J P P F K 
+G . J I I I   
+. . . . . .   
+L L . . M M   
+
+
+M-kiri
+A A B C D F   
+G H B C D F   
+G H J P P F K 
+G . J I I I   
+. . . . . .   
+L L . M M .   
+
+
+J-bawah
+A A B C D F   
+G H B C D F   
+G H . P P F K 
+G . . I I I   
+. . J . . .   
+L L J M M .   
+
+
+M-kanan
+A A B C D F   
+G H B C D F   
+G H . P P F K 
+G . . I I I   
+. . J . . .   
+L L J . M M   
+
+
+I-kiri
+A A B C D F   
+G H B C D F   
+G H . P P F K 
+G I I I . .   
+. . J . . .   
+L L J . M M   
+
+
+M-kiri
+A A B C D F   
+G H B C D F   
+G H . P P F K 
+G I I I . .   
+. . J . . .   
+L L J M M .   
+
+
+I-kanan
+A A B C D F   
+G H B C D F   
+G H . P P F K 
+G . I I I .   
+. . J . . .   
+L L J M M .   
+
+
+M-kanan
+A A B C D F   
+G H B C D F   
+G H . P P F K 
+G . I I I .   
+. . J . . .   
+L L J . M M   
+
+
+H-bawah
+A A B C D F   
+G . B C D F   
+G . . P P F K 
+G H I I I .   
+. H J . . .   
+L L J . M M   
+
+
+I-kanan
+A A B C D F   
+G . B C D F   
+G . . P P F K 
+G H . I I I   
+. H J . . .   
+L L J . M M   
+
+
+M-kiri
+A A B C D F   
+G . B C D F   
+G . . P P F K 
+G H . I I I   
+. H J . . .   
+L L J M M .   
+
+
+J-atas
+A A B C D F   
+G . B C D F   
+G . J P P F K 
+G H J I I I   
+. H . . . .   
+L L . M M .   
+
+
+M-kanan
+A A B C D F   
+G . B C D F   
+G . J P P F K 
+G H J I I I   
+. H . . . .   
+L L . . M M   
+
+
+M-kiri
+A A B C D F   
+G . B C D F   
+G . J P P F K 
+G H J I I I   
+. H . . . .   
+L L M M . .   
+
+
+J-bawah
+A A B C D F   
+G . B C D F   
+G . . P P F K 
+G H J I I I   
+. H J . . .   
+L L M M . .   
+
+
+M-kanan
+A A B C D F   
+G . B C D F   
+G . . P P F K 
+G H J I I I   
+. H J . . .   
+L L . . M M   
+
+
+M-kiri
+A A B C D F   
+G . B C D F   
+G . . P P F K 
+G H J I I I   
+. H J . . .   
+L L . M M .   
+
+
+H-atas
+A A B C D F   
+G . B C D F   
+G H . P P F K 
+G H J I I I   
+. . J . . .   
+L L . M M .   
+
+
+M-kiri
+A A B C D F   
+G . B C D F   
+G H . P P F K 
+G H J I I I   
+. . J . . .   
+L L M M . .   
+
+
+H-atas
+A A B C D F   
+G H B C D F   
+G H . P P F K 
+G . J I I I   
+. . J . . .   
+L L M M . .   
+
+
+B-bawah
+A A . C D F   
+G H B C D F   
+G H B P P F K 
+G . J I I I   
+. . J . . .   
+L L M M . .   
+
+
+M-kanan
+A A . C D F   
+G H B C D F   
+G H B P P F K 
+G . J I I I   
+. . J . . .   
+L L . . M M   
+
+
+M-kiri
+A A . C D F   
+G H B C D F   
+G H B P P F K 
+G . J I I I   
+. . J . . .   
+L L . M M .   
+
+
+L-kanan
+A A . C D F   
+G H B C D F   
+G H B P P F K 
+G . J I I I   
+. . J . . .   
+. L L M M .   
+
+
+M-kanan
+A A . C D F   
+G H B C D F   
+G H B P P F K 
+G . J I I I   
+. . J . . .   
+. L L . M M   
+
+
+L-kanan
+A A . C D F   
+G H B C D F   
+G H B P P F K 
+G . J I I I   
+. . J . . .   
+. . L L M M   
+
+
+H-bawah
+A A . C D F   
+G . B C D F   
+G . B P P F K 
+G . J I I I   
+. H J . . .   
+. H L L M M   
+
+
+H-atas
+A A . C D F   
+G . B C D F   
+G . B P P F K 
+G H J I I I   
+. H J . . .   
+. . L L M M   
+
+
+L-kiri
+A A . C D F   
+G . B C D F   
+G . B P P F K 
+G H J I I I   
+. H J . . .   
+L L . . M M   
+
+
+M-kiri
+A A . C D F   
+G . B C D F   
+G . B P P F K 
+G H J I I I   
+. H J . . .   
+L L M M . .   
+
+
+G-bawah
+A A . C D F   
+. . B C D F   
+G . B P P F K 
+G H J I I I   
+G H J . . .   
+L L M M . .   
+
+
+M-kanan
+A A . C D F   
+. . B C D F   
+G . B P P F K 
+G H J I I I   
+G H J . . .   
+L L . . M M   
+
+
+M-kiri
+A A . C D F   
+. . B C D F   
+G . B P P F K 
+G H J I I I   
+G H J . . .   
+L L . M M .   
+
+
+L-kanan
+A A . C D F   
+. . B C D F   
+G . B P P F K 
+G H J I I I   
+G H J . . .   
+. L L M M .   
+
+
+M-kanan
+A A . C D F   
+. . B C D F   
+G . B P P F K 
+G H J I I I   
+G H J . . .   
+. L L . M M   
+
+
+L-kanan
+A A . C D F   
+. . B C D F   
+G . B P P F K 
+G H J I I I   
+G H J . . .   
+. . L L M M   
+
+
+H-bawah
+A A . C D F   
+. . B C D F   
+G . B P P F K 
+G . J I I I   
+G H J . . .   
+. H L L M M   
+
+
+H-atas
+A A . C D F   
+. H B C D F   
+G H B P P F K 
+G . J I I I   
+G . J . . .   
+. . L L M M   
+
+
+L-kiri
+A A . C D F   
+. H B C D F   
+G H B P P F K 
+G . J I I I   
+G . J . . .   
+L L . . M M   
+
+
+M-kiri
+A A . C D F   
+. H B C D F   
+G H B P P F K 
+G . J I I I   
+G . J . . .   
+L L . M M .   
+
+
+J-bawah
+A A . C D F   
+. H B C D F   
+G H B P P F K 
+G . . I I I   
+G . J . . .   
+L L J M M .   
+
+
+M-kanan
+A A . C D F   
+. H B C D F   
+G H B P P F K 
+G . . I I I   
+G . J . . .   
+L L J . M M   
+
+
+I-kiri
+A A . C D F   
+. H B C D F   
+G H B P P F K 
+G I I I . .   
+G . J . . .   
+L L J . M M   
+
+
+M-kiri
+A A . C D F   
+. H B C D F   
+G H B P P F K 
+G I I I . .   
+G . J . . .   
+L L J M M .   
+
+
+I-kanan
+A A . C D F   
+. H B C D F   
+G H B P P F K 
+G . I I I .   
+G . J . . .   
+L L J M M .   
+
+
+M-kanan
+A A . C D F   
+. H B C D F   
+G H B P P F K 
+G . I I I .   
+G . J . . .   
+L L J . M M   
+
+
+H-bawah
+A A . C D F   
+. . B C D F   
+G H B P P F K 
+G H I I I .   
+G . J . . .   
+L L J . M M   
+
+
+M-kiri
+A A . C D F   
+. . B C D F   
+G H B P P F K 
+G H I I I .   
+G . J . . .   
+L L J M M .   
+
+
+I-kanan
+A A . C D F   
+. . B C D F   
+G H B P P F K 
+G H . I I I   
+G . J . . .   
+L L J M M .   
+
+
+M-kanan
+A A . C D F   
+. . B C D F   
+G H B P P F K 
+G H . I I I   
+G . J . . .   
+L L J . M M   
+
+
+H-bawah
+A A . C D F   
+. . B C D F   
+G . B P P F K 
+G H . I I I   
+G H J . . .   
+L L J . M M   
+
+
+G-atas
+A A . C D F   
+G . B C D F   
+G . B P P F K 
+G H . I I I   
+. H J . . .   
+L L J . M M   
+
+
+I-kiri
+A A . C D F   
+G . B C D F   
+G . B P P F K 
+G H I I I .   
+. H J . . .   
+L L J . M M   
+
+
+M-kiri
+A A . C D F   
+G . B C D F   
+G . B P P F K 
+G H I I I .   
+. H J . . .   
+L L J M M .   
+
+
+H-atas
+A A . C D F   
+G H B C D F   
+G H B P P F K 
+G . I I I .   
+. . J . . .   
+L L J M M .   
+
+
+M-kanan
+A A . C D F   
+G H B C D F   
+G H B P P F K 
+G . I I I .   
+. . J . . .   
+L L J . M M   
+
+
+I-kiri
+A A . C D F   
+G H B C D F   
+G H B P P F K 
+G I I I . .   
+. . J . . .   
+L L J . M M   
+
+
+M-kiri
+A A . C D F   
+G H B C D F   
+G H B P P F K 
+G I I I . .   
+. . J . . .   
+L L J M M .   
+
+
+F-bawah
+A A . C D .   
+G H B C D .   
+G H B P P . K 
+G I I I . F   
+. . J . . F   
+L L J M M F   
+
+
+P-kanan
+A A . C D .   
+G H B C D .   
+G H B . P P K 
+G I I I . F   
+. . J . . F   
+L L J M M F   
+
+
+Solusi ditemukan
+
+Waktu (ms)      : 9.1623
+Node dikunjungi : 172
+Jumlah langkah  : 69

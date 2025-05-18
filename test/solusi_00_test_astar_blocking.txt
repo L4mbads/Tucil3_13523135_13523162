@@ -1,0 +1,60 @@
+Solusi:
+Start state
+A A B . . F   
+. . B C D F   
+G P P C D F K 
+G H . I I I   
+G H J . . .   
+L L J M M .   
+
+
+D-atas
+A A B . D F   
+. . B C D F   
+G P P C . F K 
+G H . I I I   
+G H J . . .   
+L L J M M .   
+
+
+I-kiri
+A A B . D F   
+. . B C D F   
+G P P C . F K 
+G H I I I .   
+G H J . . .   
+L L J M M .   
+
+
+C-atas
+A A B C D F   
+. . B C D F   
+G P P . . F K 
+G H I I I .   
+G H J . . .   
+L L J M M .   
+
+
+F-bawah
+A A B C D .   
+. . B C D .   
+G P P . . . K 
+G H I I I F   
+G H J . . F   
+L L J M M F   
+
+
+P-kanan
+A A B C D .   
+. . B C D .   
+G . . . P P K 
+G H I I I F   
+G H J . . F   
+L L J M M F   
+
+
+Solusi ditemukan
+
+Waktu (ms)      : 7.9666
+Node dikunjungi : 277
+Jumlah langkah  : 5

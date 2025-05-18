@@ -362,6 +362,7 @@ public class GUI extends Application {
             Button saveButton = createStyledButton("\uD83D\uDCBE Simpan Solusi");
             saveButton.setOnAction(e -> {
                 FileChooser fileChooser = new FileChooser();
+                fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
                 fileChooser.setTitle("Simpan Solusi sebagai .txt");
                 fileChooser.setInitialFileName("solusi.txt");
                 File file = fileChooser.showSaveDialog(stage);
