@@ -141,13 +141,13 @@ public class Utils {
             // cek gap
             if (isHorizontal) {
                 for (int i = 1; i < posList.size(); i++) {
-                    if (posList.get(i)[1] != posList.get(i - 1)[1] + 1) {
+                    if (posList.get(i)[1] != posList.get(i - 1)[1] + 1 || posList.get(i)[0] != posList.get(i-1)[0]) {
                         throw new IllegalArgumentException("Format file tidak valid! Mobil '" + id + "' memiliki celah pada kolom.");
                     }
                 }
             } else {
                 for (int i = 1; i < posList.size(); i++) {
-                    if (posList.get(i)[0] != posList.get(i - 1)[0] + 1) {
+                    if (posList.get(i)[0] != posList.get(i - 1)[0] + 1 || posList.get(i)[1] != posList.get(i-1)[1])  {
                         throw new IllegalArgumentException("Format file tidak valid! Mobil '" + id + "' memiliki celah pada baris.");
                     }
                 }
