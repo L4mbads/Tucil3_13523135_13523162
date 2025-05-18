@@ -120,7 +120,7 @@ public class GUI extends Application {
         Text subtitle = styledLabel("Pilih algoritma dan puzzle:");
         subtitle.setFill(Color.LIGHTYELLOW);
 
-        errorMessageText = styledLabel("");
+        errorMessageText = styledLabel2("");
         errorMessageText.setFill(Color.ORANGERED);
 
         ComboBox<String> algoSelector = new ComboBox<>();
