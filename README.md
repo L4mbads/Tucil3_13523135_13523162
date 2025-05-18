@@ -1,5 +1,5 @@
 # Tugas Kecil 3 IF2211 2024/2025
-![GUI Tampilan Awal](./assets/screenshot_gui_home.png)
+![main menu](rush_hour_solver.PNG)
 ### Tentang Projek
 
 **Rush Hour Solver** adalah aplikasi Java berbasis GUI dan CLI yang dirancang untuk menyelesaikan puzzle permainan *Rush Hour* menggunakan algoritma pencarian seperti **Uniform Cost Search (UCS)**, **Greedy Best First Search (GBFS)**, dan **A\***. Program ini dikembangkan untuk memenuhi tugas mata kuliah IF2211 Strategi Algoritma pada Semester 2 Tahun Akademik 2024/2025.
