@@ -17,23 +17,21 @@ import com.syafiqriza.rushhoursolver.model.heuristic.DistanceHeuristic;
 import com.syafiqriza.rushhoursolver.model.heuristic.Heuristic;
 
 public class CLI {
-    public void run() {
+    public static void main(String[] args) {
         try (Scanner sc = new Scanner(System.in)) {
             String filePath;
 
-            // if (args.length == 0) {
-            System.out.print("Masukkan path ke file puzzle (.txt): ");
-            filePath = sc.nextLine();
-            // } else {
-            //     filePath = args[0];
-            // }
+            if (args.length == 0) {
+                System.out.print("Masukkan path ke file puzzle (.txt): ");
+                filePath = sc.nextLine();
+            } else {
+                filePath = args[0];
+            }
 
             Board board;
             try {
                 board = Utils.readRushHourPuzzleFromFile(filePath);
                 board.printBoard();
-                System.out.println("- Tujuan: (" + board.getGoalRow() + ", " + board.getGoalCol() + ")");
-                System.out.println("padahal board " + board.getCols() +", " + board.getRows());
             } catch (IOException e) {
                 System.err.println("File tidak ditemukan: " + e.getMessage());
                 return;
@@ -45,21 +43,28 @@ public class CLI {
                 return;
             }
 
+            System.out.println();
 
             int chosenAlgorithm = 0;
             System.out.println("""
-                Pilih algoritma:
-                1. Uniform Cost Search
-                2. Greedy Best First Search
-                3. A*
-                    """);
+                    Pilih algoritma:
+                    1. Uniform Cost Search
+                    2. Greedy Best First Search
+                    3. A*
+                        """);
 
-            while(!sc.hasNextInt()) {
-                System.out.println("Masukkan pilihan angka yang valid");
-                sc.nextLine();
-            }
-            while(chosenAlgorithm <= 0 || chosenAlgorithm > 3) {
+            while (true) {
+                System.out.print(">>");
+                if (!sc.hasNextInt()) {
+                    System.out.println("Masukkan pilihan angka yang valid");
+                    sc.nextLine();
+                    continue;
+                }
                 chosenAlgorithm = sc.nextInt();
+                if (chosenAlgorithm > 0 && chosenAlgorithm < 4) {
+                    break;
+                }
+                System.out.println("Masukkan pilihan angka yang valid");
             }
 
             Algorithm algorithm = null;
@@ -78,25 +83,26 @@ public class CLI {
                     assert false;
             }
 
-
-            if(algorithm instanceof InformedSearch alg) {
+            if (algorithm instanceof InformedSearch alg) {
                 int chosenHeuristic = 0;
                 System.out.println("""
-                    Pilih heuristik:
-                    1. Blocking Cars
-                    2. Distance to Goal
-                        """);
+                        Pilih heuristik:
+                        1. Blocking Cars
+                        2. Distance to Goal
+                            """);
 
-                while(true) {
-                    while(!sc.hasNextInt()) {
-                        sc.nextLine();
+                while (true) {
+                    System.out.print(">>");
+                    if (!sc.hasNextInt()) {
                         System.out.println("Masukkan pilihan angka yang valid");
+                        sc.nextLine();
                         continue;
                     }
                     chosenHeuristic = sc.nextInt();
-                    if(chosenHeuristic > 0 && chosenHeuristic < 3) {
+                    if (chosenHeuristic > 0 && chosenHeuristic < 3) {
                         break;
                     }
+
                     System.out.println("Masukkan pilihan angka yang valid");
                 }
 
@@ -121,9 +127,9 @@ public class CLI {
 
             System.out.println();
 
-            if(solutionData.states != null) {
+            if (solutionData.states != null) {
                 System.out.println("Solusi: ");
-                for(State state : solutionData.states) {
+                for (State state : solutionData.states) {
                     System.out.println(state.getBoard().getDetail());
                     state.getBoard().printBoard();
                     System.out.println();
@@ -137,6 +143,9 @@ public class CLI {
 
             System.out.println("Waktu (ms)      : " + solutionData.timeElapsedMs);
             System.out.println("Node dikunjungi : " + solutionData.nodeCount);
+
+            if (solutionData.states != null)
+                System.out.println("Jumlah langkah  : " + solutionData.states.length);
 
             System.out.println();
 

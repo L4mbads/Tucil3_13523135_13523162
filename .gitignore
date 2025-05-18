@@ -27,6 +27,7 @@ replay_pid*
 !lib/*
 
 # exclude executable jar
+bin/*
 !bin/*.jar
 
 ### Gradle ###

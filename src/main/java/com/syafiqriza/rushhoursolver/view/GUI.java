@@ -182,6 +182,7 @@ public class GUI extends Application {
         loadButton.setOnAction(e -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open Puzzle File");
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
             File file = fileChooser.showOpenDialog(stage);
             if (file != null) {
                 try {
@@ -190,7 +191,23 @@ public class GUI extends Application {
                     errorMessageText.setText("Puzzle berhasil dimuat");
                 } catch (IOException | IllegalArgumentException ex) {
                     errorMessageText.setFill(Color.ORANGERED);
-                    errorMessageText.setText("Error membaca puzzle");
+
+                    // split messages into lines
+                    String message = ex.getMessage();
+                    StringBuilder formattedMessage = new StringBuilder();
+                    int lineLength = 0;
+                    final int maxLength = 35;
+
+                    for (String word : message.split(" ")) {
+                        if (lineLength + word.length() > maxLength) {
+                            formattedMessage.append("\n");
+                            lineLength = 0;
+                        }
+                        formattedMessage.append(word).append(" ");
+                        lineLength += word.length() + 1;
+                    }
+
+                    errorMessageText.setText(formattedMessage.toString().trim());
                 }
             }
         });

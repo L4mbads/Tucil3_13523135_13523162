@@ -3,11 +3,11 @@
 SRC_DIR=src/main/java/com/syafiqriza/rushhoursolver
 BIN_DIR=bin
 JAR_NAME=RushHour.jar
-MAIN_CLASS=com.syafiqriza.rushhoursolver.Main
+MAIN_CLASS=com.syafiqriza.rushhoursolver.view.CLI
 
 mkdir -p $BIN_DIR
 
-/usr/bin/find ./$SRC_DIR -name "*.java" > sources.txt
+/usr/bin/find ./$SRC_DIR -name "*.java" ! -name "BoardView.java" ! -name "GUI.java" ! -name "Main.java" > sources.txt
 javac -d $BIN_DIR -sourcepath /$SRC_DIR @sources.txt
 rm sources.txt
 
