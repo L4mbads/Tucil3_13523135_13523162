@@ -34,8 +34,34 @@ public class BoardView extends GridPane {
      */
     public void draw(Board board) {
         this.currentGrid = board.getGrid();
-        draw(currentGrid);
+        getChildren().clear();
+
+        int rows = board.getRows();
+        int cols = board.getCols();
+        int goalRow = board.getGoalRowClamped();
+        int goalCol = board.getGoalColClamped();
+
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                Rectangle tile = new Rectangle(TILE_SIZE, TILE_SIZE);
+                char c = currentGrid[row][col];
+
+                tile.setFill(getColorForCar(c));
+                tile.setStroke(Color.web("#cccccc"));
+                tile.setStrokeWidth(1.5);
+                tile.setArcWidth(16);
+                tile.setArcHeight(16);
+
+                if (row==goalRow && col == goalCol) {
+                    tile.setStroke(Color.YELLOW);
+                    tile.setStrokeWidth(3.0);
+                }
+
+                add(tile, col, row);
+            }
+        }
     }
+
 
     /**
      * Menggambar ulang papan berdasarkan grid.
@@ -67,7 +93,7 @@ public class BoardView extends GridPane {
      * @param state State yang akan digambarkan.
      */
     public void draw(State state) {
-        draw(state.getBoard().getGrid());
+        draw(state.getBoard());
     }
 
 
