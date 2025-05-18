@@ -30,7 +30,7 @@ git clone https://github.com/username/repo-rush-hour.git
 ```
 
 ---
-### Compile CLI
+### Compile CLI (jika tidak memiliki Gradle)
 ```bash
 cd ./path-ke-folder
 ./build.sh
@@ -70,6 +70,8 @@ cd ./path-ke-folder
 
 ```bash
 java -jar bin/libs/rush-hour-solver.jar cli
+java -jar bin/libs/rush-hour-solver.jar cli path/to/file.txt
+
 ```
 
 ### Author
